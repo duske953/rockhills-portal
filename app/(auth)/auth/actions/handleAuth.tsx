@@ -32,50 +32,54 @@ async function handleSignup(name: string, password: string) {
 }
 
 async function handleLogin(name: string, password: string, currDate: Date) {
-  const user = await prisma.account.findFirst({
-    where: {
-      name: {
-        equals: name,
-        mode: 'insensitive',
-      },
-    },
-  });
-
-  if (!user) return sendResponse('unauthorized', 401);
-  if (!(await comparePassword(password, user?.password)))
-    return sendResponse('unauthorized', 401);
-  if (!user.active) return sendResponse('Contact admin for approval', 401);
-  const isLoggedIn = await prisma.worker.findFirst({
-    where: { isActive: true },
-  });
-  const hour = moment(currDate).get('hour');
-  const minute = moment(currDate).get('minute');
-  const currTime = moment({ hour, minute });
-  const validLoginTime = moment(currTime).isAfter(CHECK_IN_TIME);
-  if (!isLoggedIn?.isActive && validLoginTime) {
-    await prisma.worker.create({
-      data: {
-        name: name.toLowerCase(),
+  try {
+    const user = await prisma.account.findFirst({
+      where: {
+        name: {
+          equals: name,
+          mode: 'insensitive',
+        },
       },
     });
-    return sendResponse('Logged In', 200);
-  }
 
-  if (!isLoggedIn?.isActive && !validLoginTime) {
-    await sendCookies('temporary-login', user.name);
-    return sendResponse(
-      'Login is not yet open. You can access your account starting from 8:45 AM.',
-      200
-    );
+    if (!user) return sendResponse('unauthorized', 401);
+    if (!(await comparePassword(password, user?.password)))
+      return sendResponse('unauthorized', 401);
+    if (!user.active) return sendResponse('Contact admin for approval', 401);
+    const isLoggedIn = await prisma.worker.findFirst({
+      where: { isActive: true },
+    });
+    const hour = moment(currDate).get('hour');
+    const minute = moment(currDate).get('minute');
+    const currTime = moment({ hour, minute });
+    const validLoginTime = moment(currTime).isAfter(CHECK_IN_TIME);
+    if (!isLoggedIn?.isActive && validLoginTime) {
+      await prisma.worker.create({
+        data: {
+          name: name.toLowerCase(),
+        },
+      });
+      return sendResponse('Logged In', 200);
+    }
+
+    if (!isLoggedIn?.isActive && !validLoginTime) {
+      await sendCookies('temporary-login', user.name);
+      return sendResponse(
+        'Login is not yet open. You can access your account starting from 8:45 AM.',
+        200
+      );
+    }
+    if (
+      isLoggedIn?.isActive &&
+      isLoggedIn.name.toLowerCase() !== user.name.toLowerCase()
+    ) {
+      await sendCookies('temporary-login', user.name);
+      return sendResponse('authenticated', 200);
+    }
+    return sendResponse('Logged In', 200);
+  } catch (err) {
+    return sendResponse(err.message, 400);
   }
-  if (
-    isLoggedIn?.isActive &&
-    isLoggedIn.name.toLowerCase() !== user.name.toLowerCase()
-  ) {
-    await sendCookies('temporary-login', user.name);
-    return sendResponse('authenticated', 200);
-  }
-  return sendResponse('Logged In', 200);
 }
 
 export default async function handleAuth(
