@@ -1,0 +1,66 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model Worker {
+  id String @id @map("_id") @default(auto()) @db.ObjectId
+  name String
+  isActive Boolean @default(true)
+  approved Boolean @default(false)
+  approvedAmount Json?
+  lodgeAmount Json[]
+  checkInTime DateTime @default(now())
+  expenses Json[]
+  drinkSales Json?
+  checkOutTime DateTime?
+  customers Customers[]
+}
+
+model Account {
+  id String @id @map("_id") @default(auto()) @db.ObjectId
+  name String @unique
+  active Boolean @default(false)
+  deactivate Boolean @default(false)
+  password String
+}
+
+
+
+model Rooms {
+  id String @id @map("_id") @default(auto()) @db.ObjectId
+  room Int @unique
+  price Int
+  booked Boolean @default(false)
+  checkInTime DateTime?
+}
+
+
+model Customers {
+    id String @id @map("_id") @default(auto()) @db.ObjectId
+    name String
+    room Int
+    amount Int
+    phoneNumber String
+    stayType String
+    paymentType String
+    checkInTime String
+    workerId String? @db.ObjectId
+    worker Worker? @relation(fields: [workerId],references: [id])
+}
+
+enum Role {
+  RECEPTIONIST
+  SUPERVISOR
+}
