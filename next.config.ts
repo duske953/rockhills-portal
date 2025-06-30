@@ -1,4 +1,5 @@
 import type { NextConfig } from 'next';
+const { PrismaPlugin } = require('@prisma/nextjs-monorepo-workaround-plugin');
 
 const nextConfig: NextConfig = {
   typescript: {
@@ -8,6 +9,13 @@ const nextConfig: NextConfig = {
     ignoreDuringBuilds: true,
   },
 
+  webpack: (config, { isServer }) => {
+    if (isServer) {
+      config.plugins = [...config.plugins, new PrismaPlugin()];
+    }
+
+    return config;
+  },
   /* config options here */
 };
 
