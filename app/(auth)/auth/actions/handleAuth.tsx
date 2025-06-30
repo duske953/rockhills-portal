@@ -27,7 +27,7 @@ async function handleSignup(name: string, password: string) {
   } catch (err: any) {
     if (err.name === 'PrismaClientKnownRequestError')
       return sendResponse('Account exists', 400);
-    return sendResponse('Something went wrong', 500);
+    return sendResponse(err.message, 500);
   }
 }
 
