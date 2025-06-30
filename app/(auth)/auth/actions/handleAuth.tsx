@@ -1,6 +1,7 @@
 'use server';
 import { sendCookies } from '@/app/utils/cookies';
 import sendResponse from '@/app/utils/sendResponse';
+import tryCatchWrapper from '@/app/utils/tryCatchWrapper';
 import prisma from '@/lib/prisma';
 import bcrypt from 'bcrypt';
 import moment from 'moment';
@@ -15,24 +16,18 @@ async function comparePassword(plainPassword: string, hashedPassword: string) {
   return await bcrypt.compare(plainPassword, hashedPassword);
 }
 
-async function handleSignup(name: string, password: string) {
-  try {
-    await prisma.account.create({
-      data: {
-        name: name.toLowerCase(),
-        password: await hashPassword(password),
-      },
-    });
-    return sendResponse('Account created', 200);
-  } catch (err: any) {
-    if (err.name === 'PrismaClientKnownRequestError')
-      // return sendResponse('Account exists', 400);
-      return sendResponse(err.message, 500);
-  }
-}
+const handleSignup = tryCatchWrapper(async (name: string, password: string) => {
+  await prisma.account.create({
+    data: {
+      name: name.toLowerCase(),
+      password: await hashPassword(password),
+    },
+  });
+  return sendResponse('Account created', 200);
+});
 
-async function handleLogin(name: string, password: string, currDate: Date) {
-  try {
+const handleLogin = tryCatchWrapper(
+  async (name: string, password: string, currDate: Date) => {
     const user = await prisma.account.findFirst({
       where: {
         name: {
@@ -77,10 +72,8 @@ async function handleLogin(name: string, password: string, currDate: Date) {
       return sendResponse('authenticated', 200);
     }
     return sendResponse('Logged In', 200);
-  } catch (err) {
-    return sendResponse(err.message, 400);
   }
-}
+);
 
 export default async function handleAuth(
   name: string,
