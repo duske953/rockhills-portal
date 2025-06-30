@@ -1,4 +1,5 @@
 'use client';
+// eslint:@typescript-eslint/no-explicit-any: "off"
 import { ReactNode, useMemo, useState } from 'react';
 import {
   Table,
