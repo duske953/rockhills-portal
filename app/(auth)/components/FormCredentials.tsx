@@ -66,9 +66,9 @@ export default function FormCredentials({
   return (
     <form
       onSubmit={renderSubmitCredentials}
-      className="max-w-xl mx-auto px-4 py-10 relative"
+      className="max-w-xl mx-auto px-4 py-10 max-sm:py-20 relative"
     >
-      <h1 className="font-bold uppercase text-gray-800 text-4xl mb-7 text-center">
+      <h1 className="font-bold uppercase text-gray-800 text-4xl mb-7 text-center max-sm:text-3xl">
         {action}
       </h1>
       <div className="flex flex-col gap-5">

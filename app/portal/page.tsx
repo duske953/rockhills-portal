@@ -35,7 +35,7 @@ export default async function Page() {
 
         <div className="">{<DropdownMenuCheckboxes />}</div>
 
-        <div className="absolute right-3 gap-5 flex">
+        <div className="absolute right-3 gap-5 flex max-sm:py-10">
           <Link
             className={cn(buttonVariants({ variant: 'outline' }))}
             href="/portal/account-report"
