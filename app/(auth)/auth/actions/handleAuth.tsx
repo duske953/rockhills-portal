@@ -52,7 +52,6 @@ async function handleLogin(name: string, password: string, currDate: Date) {
   const minute = moment(currDate).get('minute');
   const currTime = moment({ hour, minute });
   const validLoginTime = moment(currTime).isAfter(CHECK_IN_TIME);
-  console.log(currTime, CHECK_IN_TIME, validLoginTime);
   if (!isLoggedIn?.isActive && validLoginTime) {
     await prisma.worker.create({
       data: {
