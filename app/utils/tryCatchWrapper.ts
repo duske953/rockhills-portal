@@ -8,7 +8,7 @@ export default function tryCatchWrapper(fn: AsyncFunction): AsyncFunction {
   return async (...args: any[]): Promise<any> => {
     try {
       return await fn(...args);
-    } catch (err) {
+    } catch {
       return sendResponse('Something went wrong', 500);
     }
   };
