@@ -71,6 +71,7 @@ const handleLogin = tryCatchWrapper(
       await sendCookies('temporary-login', user.name);
       return sendResponse('authenticated', 200);
     }
+    await sendCookies('authenticated', user.name);
     return sendResponse('Logged In', 200);
   }
 );

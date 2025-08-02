@@ -2,7 +2,6 @@ import prisma from '@/lib/prisma';
 import AccountList from '../../components/AccountList';
 export default async function Page() {
   const account = await prisma.account.findMany();
-
   return (
     <div>
       {account.length === 0 && (

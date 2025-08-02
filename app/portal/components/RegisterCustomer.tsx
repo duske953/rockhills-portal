@@ -18,7 +18,7 @@ import {
   removeCommaAmount,
 } from '@/app/utils/formatAmount';
 
-export function DropdownMenuCheckboxes() {
+export default function RegisterCustomer() {
   const [activeRoom, setActiveRoom] = useState(rooms);
   const [roomMetaData, setRoomMetaData] = useState({
     amount: '',

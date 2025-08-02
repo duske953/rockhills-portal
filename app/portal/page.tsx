@@ -1,5 +1,4 @@
 import prisma from '@/lib/prisma';
-import { DropdownMenuCheckboxes } from './components/RoomsDropdown';
 import Link from 'next/link';
 import { cn } from '../lib/utils';
 import { buttonVariants } from '../components/ui/button';
@@ -7,10 +6,11 @@ import DeregisterRoom from './components/DeRegisterRoom';
 import { getCookies } from '../utils/cookies';
 import TemporaryLogin from './components/TemporaryLogin';
 import { redirect } from 'next/navigation';
+import RegisterCustomer from './components/RegisterCustomer';
 
 export default async function Page() {
   const temporaryWorker = await getCookies('temporary-login');
-
+  const isUserAuth = await getCookies('authenticated');
   const activeUser = await prisma.worker.findFirst({
     take: 1,
     where: {
@@ -23,8 +23,11 @@ export default async function Page() {
   });
 
   if (temporaryWorker) return <TemporaryLogin name={temporaryWorker.value} />;
-  if (!activeUser) redirect('/auth/login');
-  // if (!activeUser && !temporaryWorker) redirect('/');
+  if (!isUserAuth || !activeUser) redirect('/auth/login');
+  if (
+    activeUser.name.toLocaleLowerCase() !== isUserAuth.value.toLocaleLowerCase()
+  )
+    redirect('/auth/login');
 
   return (
     <section className="pb-10">
@@ -33,7 +36,7 @@ export default async function Page() {
           Welcome {activeUser?.name || 'Guest'}
         </p>
 
-        <div className="">{<DropdownMenuCheckboxes />}</div>
+        <RegisterCustomer />
 
         <div className="absolute right-3 gap-5 flex max-sm:py-10">
           <Link

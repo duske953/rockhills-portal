@@ -87,7 +87,7 @@ export default function CustomerInformation({
         <MetaData
           key={roomMetaData.customerNumber}
           heading="Customer's-Number"
-          text={`0${roomMetaData.customerNumber}`}
+          text={`${roomMetaData.customerNumber}`}
         />
       )}
     </ul>
