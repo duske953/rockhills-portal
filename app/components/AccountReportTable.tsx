@@ -197,7 +197,7 @@ export default function AccountReportTable({
               </div>
 
               <div className=" gap-2 flex justify-end flex-col right-0 items-end relative -top-10">
-                <div className="relative -top-12">
+                <div className="relative -top-12 max-sm:-top-28">
                   {type === 'worker' ? (
                     <p
                       className={cn(

@@ -16,7 +16,6 @@ export default function ApproveAccountReport({
 
     return notify(response.message, 'approve-account', response.code);
   }
-  console.log(approved);
   return (
     <Button
       onClick={renderApproveAccountReport}
