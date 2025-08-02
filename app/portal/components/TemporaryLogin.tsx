@@ -9,7 +9,7 @@ import Logout from '@/app/components/Logout';
 export default function TemporaryLogin({ name }: { name: string }) {
   return (
     <>
-      <section className="pb-10">
+      <section className="pb-10 max-sm:pt-16">
         <div className="max-w-4xl mx-auto px-3 py-4 text-center relative">
           <p className="py-8 text-3xl text-gray-600 font-bold">
             Welcome {name}

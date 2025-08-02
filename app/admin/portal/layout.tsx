@@ -15,7 +15,7 @@ export default async function Page({ children }: { children: ReactNode }) {
   const accounts = await prisma.account.findMany({ select: { name: true } });
 
   return (
-    <section>
+    <section className="max-sm:pt-16">
       <div className="max-w-3xl mx-auto px-6 py-10 text-center flex flex-col gap-14 relative">
         <h1 className="text-4xl font-bold text-center">Welcome Admin</h1>
         <div className="flex gap-8 justify-center flex-wrap">
