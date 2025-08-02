@@ -131,8 +131,9 @@ export default function AccountReportTable({
       {children}
       <div className="">
         <p className="mb-3">Sort By</p>
-        <div className="flex gap-3 items-center">
+        <div className="flex gap-3 items-center relative z-40">
           <DatePicker
+            className=""
             customInput={
               <Button variant="outline">{formatDate(startDate)}</Button>
             }
@@ -179,7 +180,7 @@ export default function AccountReportTable({
                 {moment(report.checkInTime).format('MMMM Do, YYYY')}
               </p>
 
-              <div className="relative">
+              <div className="relative z-10">
                 {type === 'worker' && report.expenses.length <= 0 && (
                   <Expenses
                     savedExpenses={report.expenses}
