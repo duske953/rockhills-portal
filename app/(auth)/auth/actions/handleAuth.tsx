@@ -68,6 +68,7 @@ const handleLogin = tryCatchWrapper(
       isLoggedIn?.isActive &&
       isLoggedIn.name.toLowerCase() !== user.name.toLowerCase()
     ) {
+      await deleteCookie('authenticated');
       await sendCookies('temporary-login', user.name);
       return sendResponse('authenticated', 200);
     }
