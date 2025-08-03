@@ -1,5 +1,5 @@
 'use server';
-import { sendCookies } from '@/app/utils/cookies';
+import { deleteCookie, sendCookies } from '@/app/utils/cookies';
 import sendResponse from '@/app/utils/sendResponse';
 import tryCatchWrapper from '@/app/utils/tryCatchWrapper';
 import prisma from '@/lib/prisma';
@@ -72,6 +72,7 @@ const handleLogin = tryCatchWrapper(
       return sendResponse('authenticated', 200);
     }
     await sendCookies('authenticated', user.name);
+    await deleteCookie('temporary-login');
     return sendResponse('Logged In', 200);
   }
 );

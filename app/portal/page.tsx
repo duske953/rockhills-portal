@@ -24,7 +24,7 @@ export default async function Page() {
 
   if (temporaryWorker && temporaryWorker.value)
     return <TemporaryLogin name={temporaryWorker.value} />;
-  if (!isUserAuth || !activeUser) redirect('/auth/login');
+  if (!isUserAuth?.value || !activeUser) redirect('/auth/login');
   if (
     activeUser.name.toLocaleLowerCase() !== isUserAuth.value.toLocaleLowerCase()
   )
