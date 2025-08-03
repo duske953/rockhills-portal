@@ -24,10 +24,10 @@ export default async function page({
 
   if (accountReport.length <= 0)
     return (
-      <section>
+      <section className="px-6">
         <div className="flex justify-center items-center h-dvh">
-          <h1 className="text-4xl font-semibold text-gray-700">
-            "{name}" has no account report yet.
+          <h1 className="text-4xl font-semibold text-gray-700 max-sm:text-3xl text-center">
+            {name} has no account report yet.
           </h1>
         </div>
       </section>
