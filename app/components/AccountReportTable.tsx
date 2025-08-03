@@ -131,9 +131,8 @@ export default function AccountReportTable({
       {children}
       <div className="">
         <p className="mb-3">Sort By</p>
-        <div className="flex gap-3 items-center relative z-40">
+        <div className="flex gap-3 items-center relative z-[500] max-sm:left-11">
           <DatePicker
-            className=""
             customInput={
               <Button variant="outline">{formatDate(startDate)}</Button>
             }
@@ -166,8 +165,9 @@ export default function AccountReportTable({
         </div>
       </div>
       <div className="">
-        <h1 className="text-gray-700 font-bold text-4xl mb-8">
-          {name}'s Summary
+        <h1 className="text-gray-700 font-bold text-4xl py-8 max-sm:pb-4 max-sm:text-2xl">
+          {name[0].toUpperCase()}
+          {name.slice(1, name.length)}'s Summary
         </h1>
 
         <section className="flex flex-col relative gap-3">
@@ -176,7 +176,7 @@ export default function AccountReportTable({
               key={report.id}
               className="relative last:border-b-4 border-t-4 border-gray-500"
             >
-              <p className="text-center py-10 max-sm:py-16 font-bold">
+              <p className="text-center py-10 max-sm:py-16 font-bold text-blue-700">
                 {moment(report.checkInTime).format('MMMM Do, YYYY')}
               </p>
 
@@ -197,8 +197,8 @@ export default function AccountReportTable({
                   )}
               </div>
 
-              <div className=" gap-2 flex justify-end flex-col right-0 items-end relative -top-10">
-                <div className="relative -top-12 max-sm:-top-28">
+              <div className="gap-2 flex justify-end flex-col items-end relative -top-10 gap">
+                <div className="absolute -top-12 max-sm:-top-24 left-0">
                   {type === 'worker' ? (
                     <p
                       className={cn(
@@ -215,27 +215,32 @@ export default function AccountReportTable({
                     />
                   )}
                 </div>
-                {report.approvedAmount?.totalPos > 0 && (
-                  <p className="flex items-center text-gray-700">
-                    <span className="mr-3 uppercase font-bold w-36">
-                      Pos Balance:
-                    </span>
-                    <FaNairaSign />
-                    <span>{formatAmount(report.approvedAmount.totalPos)}</span>
-                  </p>
-                )}
+                <div className="flex flex-col gap-3">
+                  {report.approvedAmount?.totalPos > 0 && (
+                    <div className="flex items-center text-gray-700 gap-3">
+                      <p className="mr-3 uppercase font-bold inline-block w-32">
+                        Pos Balance:
+                      </p>
+                      <p className="flex items-center">
+                        <FaNairaSign />
+                        {formatAmount(report.approvedAmount.totalPos)}
+                      </p>
+                    </div>
+                  )}
 
-                {report.approvedAmount?.totalCash > 0 && (
-                  <p className="flex items-center text-gray-700">
-                    <span className="mr-3 uppercase font-bold w-36">
-                      Cash Balance:
-                    </span>
-                    <FaNairaSign />
-                    <span>{formatAmount(report.approvedAmount.totalCash)}</span>
-                  </p>
-                )}
+                  {report.approvedAmount?.totalCash > 0 && (
+                    <div className="flex items-center text-gray-700 gap-3">
+                      <p className="mr-3 uppercase font-bold inline-block w-32">
+                        Cash Balance:
+                      </p>
+                      <p className="flex items-center">
+                        <FaNairaSign />
+                        {formatAmount(report.approvedAmount.totalCash)}
+                      </p>
+                    </div>
+                  )}
+                </div>
               </div>
-
               <Table className="relative">
                 <TableCaption>
                   <div className="flex items-center flex-col gap-">

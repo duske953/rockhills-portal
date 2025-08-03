@@ -20,7 +20,7 @@ export default function ApproveAccountReport({
     <Button
       onClick={renderApproveAccountReport}
       variant="outline"
-      className="absolute -bottom-10 right-0 z-[50]"
+      className="relative z-[50]"
     >
       {!approved ? 'Approve Report' : 'Disapprove Report'}
     </Button>
