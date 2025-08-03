@@ -22,7 +22,8 @@ export default async function Page() {
     },
   });
 
-  if (temporaryWorker) return <TemporaryLogin name={temporaryWorker.value} />;
+  if (temporaryWorker && temporaryWorker.value)
+    return <TemporaryLogin name={temporaryWorker.value} />;
   if (!isUserAuth || !activeUser) redirect('/auth/login');
   if (
     activeUser.name.toLocaleLowerCase() !== isUserAuth.value.toLocaleLowerCase()
