@@ -6,7 +6,7 @@ import prisma from '@/lib/prisma';
 import bcrypt from 'bcrypt';
 import moment from 'moment';
 
-const CHECK_IN_TIME = moment({ hour: 8, minute: 45 });
+const CHECK_IN_TIME = moment({ hour: 7, minute: 45 });
 const SALT_ROUNDS = 10;
 async function hashPassword(password: string) {
   return await bcrypt.hash(password, SALT_ROUNDS);
