@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { Toaster } from 'sonner';
 import { Ubuntu } from 'next/font/google';
+import NextTopLoader from 'nextjs-toploader';
 import './globals.css';
 
 const ubuntu = Ubuntu({
@@ -20,6 +21,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${ubuntu.className} antialiased`}>
+        <NextTopLoader />
         <Toaster
           className="pointer-events-auto"
           style={{ fontFamily: 'inherit' }}
