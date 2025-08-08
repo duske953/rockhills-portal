@@ -216,7 +216,7 @@ export default function AccountReportTable({
                   )}
                 </div>
                 {type !== 'worker' && (
-                  <p className="absolute right-0 -top-14 font-bold max-sm:-top-28 text-blue-700">
+                  <p className="absolute right-0 -top-14 font-bold max-sm:-top-28 text-blue-700 max-sm:text-xs">
                     Arrived at work at{' '}
                     {moment(report.checkInTime).format('h:mm a')}
                   </p>
