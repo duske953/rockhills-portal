@@ -198,7 +198,7 @@ export default function AccountReportTable({
               </div>
 
               <div className="gap-2 flex justify-end flex-col items-end relative -top-10 gap">
-                <div className="absolute -top-12 max-sm:-top-24 left-0">
+                <div className="absolute -top-12 max-sm:-top-24 left-0 flex items-center gap-10">
                   {type === 'worker' ? (
                     <p
                       className={cn(
@@ -215,6 +215,12 @@ export default function AccountReportTable({
                     />
                   )}
                 </div>
+                {type !== 'worker' && (
+                  <p className="absolute right-0 -top-14 font-bold max-sm:-top-28 text-blue-700">
+                    Arrived at work at{' '}
+                    {moment(report.checkInTime).format('h:mm a')}
+                  </p>
+                )}
                 <div className="flex flex-col gap-3">
                   {report.approvedAmount?.totalPos > 0 && (
                     <div className="flex items-center text-gray-700 gap-3">
