@@ -20,15 +20,21 @@ export default function AccountDropdown({
       <DropdownMenuTrigger asChild>
         <Button variant="outline">Account Report</Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent>
+      <DropdownMenuContent className="w-56 max-sm:w-64" align="center">
         <DropdownMenuLabel>Account</DropdownMenuLabel>
         <DropdownMenuSeparator />
         {accounts.map((acc) => (
-          <DropdownMenuItem key={acc.name}>
-            <Link href={`/admin/account-report?acc=${acc.name}`}>
-              {acc.name}
-            </Link>
-          </DropdownMenuItem>
+          <>
+            <DropdownMenuItem className="" key={acc.name}>
+              <Link
+                className="w-full h-full"
+                href={`/admin/account-report?acc=${acc.name}`}
+              >
+                {acc.name}
+              </Link>
+            </DropdownMenuItem>
+            <DropdownMenuSeparator />
+          </>
         ))}
       </DropdownMenuContent>
     </DropdownMenu>
