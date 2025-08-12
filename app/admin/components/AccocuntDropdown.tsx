@@ -9,6 +9,7 @@ import {
   DropdownMenuTrigger,
 } from '@/app/components/ui/dropdown-menu';
 import Link from 'next/link';
+import { Fragment } from 'react';
 
 export default function AccountDropdown({
   accounts,
@@ -24,7 +25,7 @@ export default function AccountDropdown({
         <DropdownMenuLabel>Account</DropdownMenuLabel>
         <DropdownMenuSeparator />
         {accounts.map((acc) => (
-          <>
+          <Fragment key={acc.name}>
             <DropdownMenuItem className="" key={acc.name}>
               <Link
                 className="w-full h-full"
@@ -34,7 +35,7 @@ export default function AccountDropdown({
               </Link>
             </DropdownMenuItem>
             <DropdownMenuSeparator />
-          </>
+          </Fragment>
         ))}
       </DropdownMenuContent>
     </DropdownMenu>
