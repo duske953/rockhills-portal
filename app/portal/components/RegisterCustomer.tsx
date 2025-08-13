@@ -113,7 +113,7 @@ export default function RegisterCustomer() {
         <DropDownStayType setStayType={setStayType} stayType={stayType} />
         <Input
           value={roomMetaData.amount}
-          type="text"
+          type="number"
           onChange={(e) => renderRoomMetaDataChange(e, 'amount')}
           placeholder="Enter Amount"
         />
