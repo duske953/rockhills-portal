@@ -57,7 +57,7 @@ export default function RegisterCustomer() {
         ...data,
         [type]:
           type === 'amount'
-            ? formateInputAmount(e.target.value)
+            ? formateInputAmount(String(e.target.value))
             : e.target.value,
       };
     });
