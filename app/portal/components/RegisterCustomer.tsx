@@ -57,7 +57,7 @@ export default function RegisterCustomer() {
         ...data,
         [type]:
           type === 'amount'
-            ? formateInputAmount(String(e.target.value))
+            ? formateInputAmount(e.target.value)
             : e.target.value,
       };
     });
@@ -113,7 +113,7 @@ export default function RegisterCustomer() {
         <DropDownStayType setStayType={setStayType} stayType={stayType} />
         <Input
           value={roomMetaData.amount}
-          type="number"
+          type="text"
           onChange={(e) => renderRoomMetaDataChange(e, 'amount')}
           placeholder="Enter Amount"
         />
