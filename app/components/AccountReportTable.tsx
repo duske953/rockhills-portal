@@ -118,7 +118,7 @@ export default function AccountReportTable({
                 {moment(report.checkInTime).format('MMMM Do, YYYY')}
               </p>
 
-              <div className="relative z-10 flex items-center max-sm:flex-col gap-3">
+              <div className="relative z-10 flex items-center max-sm:flex-col max-sm:items-start gap-3">
                 {type === 'worker' && report.expenses.length <= 0 && (
                   <Expenses
                     savedExpenses={report.expenses}
