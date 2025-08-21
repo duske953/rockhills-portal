@@ -13,7 +13,9 @@ export default async function Page({ children }: { children: ReactNode }) {
   }
 
   const accounts = await prisma.account.findMany({ select: { name: true } });
-
+  const activeAccount = await prisma.worker.findFirst({
+    where: { isActive: true },
+  });
   return (
     <section className="max-sm:pt-16">
       <div className="max-w-3xl mx-auto px-6 py-10 text-center flex flex-col gap-14 relative">
@@ -31,7 +33,10 @@ export default async function Page({ children }: { children: ReactNode }) {
           >
             Delete Account
           </Link>
-          <AccountDropdown accounts={accounts} />
+          <AccountDropdown
+            accounts={accounts}
+            activeAcc={activeAccount?.name}
+          />
         </div>
         {children}
       </div>
