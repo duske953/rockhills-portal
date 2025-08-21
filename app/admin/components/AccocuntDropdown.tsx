@@ -38,7 +38,9 @@ export default function AccountDropdown({
               ></span>
               <Link
                 className="w-full h-full"
-                href={`/admin/account-report?acc=${acc.name}`}
+                href={`/admin/account-report?acc=${acc.name}&month=${
+                  new Date().getMonth() + 1
+                }&year=${new Date().getFullYear()}`}
               >
                 {acc.name}
               </Link>

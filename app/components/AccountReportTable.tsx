@@ -12,7 +12,6 @@ import {
 } from '@/app/components/ui/table';
 import moment from 'moment';
 import { FaNairaSign } from 'react-icons/fa6';
-import DatePicker from 'react-datepicker';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -29,6 +28,24 @@ import { cn } from '../lib/utils';
 import ApproveAccountReport from '../admin/components/ApproveAccountReport';
 import Expenses from '../portal/components/Expenses';
 import DrinkSales from '../portal/components/DrinkSales';
+import { Input } from './ui/input';
+import Link from 'next/link';
+import { useSearchParams } from 'next/navigation';
+
+const month = [
+  'January',
+  'February',
+  'March',
+  'April',
+  'May',
+  'June',
+  'July',
+  'August',
+  'September',
+  'October',
+  'November',
+  'December',
+];
 
 export default function AccountReportTable({
   children,
@@ -41,10 +58,14 @@ export default function AccountReportTable({
   name: string;
   accountReport: any;
 }) {
-  const [startDate, setStartDate] = useState(new Date());
+  const searchParams = useSearchParams();
+  const [activeDate, setActiveDate] = useState({
+    month: Number(searchParams.get('month')) - 1 || moment().get('month'),
+    year: moment().get('year'),
+  });
   const [currAccountReport, setCurrAccountReport] = useState(accountReport);
   const [sortApproved, setSortApproved] = useState('');
-
+  console.log(searchParams.get('month'));
   interface LodgeSale {
     paymentType: 'CASH' | 'POS';
     _sum: {
@@ -79,28 +100,6 @@ export default function AccountReportTable({
     return moment(date).format('MMMM Do YYYY');
   }
 
-  function renderChangeDate(targetDate: Date | null) {
-    if (!targetDate) return 0;
-    setStartDate(targetDate);
-    setCurrAccountReport(
-      currAccountReport.toSorted(
-        (a: { checkInTime: Date }, b: { checkInTime: Date }) => {
-          if (
-            formatDate(a.checkInTime) === formatDate(targetDate) &&
-            formatDate(b.checkInTime) !== formatDate(targetDate)
-          )
-            return -1;
-          if (
-            formatDate(b.checkInTime) === formatDate(targetDate) &&
-            formatDate(a.checkInTime) !== formatDate(targetDate)
-          )
-            return 1;
-          return -1;
-        }
-      )
-    );
-  }
-
   function objectToArrObj(obj: any) {
     if (!obj) return [];
     const result = Object.entries(obj)?.map(([key, value]) => {
@@ -126,40 +125,67 @@ export default function AccountReportTable({
     );
   }
 
+  function renderActiveDate(month: number, year: number) {
+    setActiveDate({ month, year });
+  }
+
   return (
     <section className="relative">
       {children}
-      <div className="">
-        <p className="mb-3">Sort By</p>
-        <div className="flex gap-3 items-center relative z-[500] max-sm:left-11">
-          <DatePicker
-            customInput={
-              <Button variant="outline">{formatDate(startDate)}</Button>
-            }
-            maxDate={accountReport[0].checkInTime}
-            selected={startDate}
-            onChange={renderChangeDate}
-          />
-
+      <div className="flex items-center justify-between">
+        <div>
+          <p className="mb-3">Sort By</p>
+          <div className="flex gap-3 items-center relative z-[500] max-sm:left-11">
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="outline">Approved</Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent>
+                <DropdownMenuLabel>Approved Status</DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuCheckboxItem
+                  checked={sortApproved === 'approved'}
+                  onCheckedChange={() => renderSortByApproved('approved')}
+                >
+                  Approved
+                </DropdownMenuCheckboxItem>
+                <DropdownMenuCheckboxItem
+                  checked={sortApproved === 'pending'}
+                  onCheckedChange={() => renderSortByApproved('pending')}
+                >
+                  Pending
+                </DropdownMenuCheckboxItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
+        </div>
+        <div className="">
+          <p className="mb-3">Filter by</p>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="outline">Approved</Button>
+              <Button variant="outline">Month</Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent>
               <DropdownMenuLabel>Approved Status</DropdownMenuLabel>
               <DropdownMenuSeparator />
-              <DropdownMenuCheckboxItem
-                checked={sortApproved === 'approved'}
-                onCheckedChange={() => renderSortByApproved('approved')}
-              >
-                Approved
-              </DropdownMenuCheckboxItem>
-              <DropdownMenuCheckboxItem
-                checked={sortApproved === 'pending'}
-                onCheckedChange={() => renderSortByApproved('pending')}
-              >
-                Pending
-              </DropdownMenuCheckboxItem>
+              {month.map((m, i) => (
+                <Link
+                  key={m}
+                  href={`/admin/account-report?acc=${name}&month=${
+                    i + 1
+                  }&year=${activeDate.year}`}
+                >
+                  <DropdownMenuCheckboxItem
+                    key={m}
+                    checked={activeDate.month === i}
+                    onCheckedChange={() =>
+                      renderActiveDate(i, moment().get('year'))
+                    }
+                  >
+                    {m}
+                  </DropdownMenuCheckboxItem>
+                </Link>
+              ))}
             </DropdownMenuContent>
           </DropdownMenu>
         </div>

@@ -11,7 +11,6 @@ export default async function Page({ children }: { children: ReactNode }) {
   if (!(await getCookies('auth-admin'))) {
     redirect('/admin');
   }
-
   const accounts = await prisma.account.findMany({ select: { name: true } });
   const activeAccount = await prisma.worker.findFirst({
     where: { isActive: true },

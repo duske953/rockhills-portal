@@ -1,5 +1,6 @@
 import AccountReportTable from '@/app/components/AccountReportTable';
 import prisma from '@/lib/prisma';
+import moment from 'moment';
 
 export default async function page({
   searchParams,
@@ -7,12 +8,19 @@ export default async function page({
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }) {
   const name = (await searchParams).acc;
-
+  const month = (await searchParams).month;
+  const year = (await searchParams).year;
+  if (!name || !month || !year || +month < 1 || +month > 12 || +year < 2000)
+    return <div>ken</div>;
   const accountReport = await prisma.worker.findMany({
     where: {
       name: {
         equals: name as string,
         mode: 'insensitive',
+      },
+      checkInTime: {
+        gte: moment(`${year}-${+month}-01`).toDate(),
+        lt: moment(`${year}-${+month !== 12 ? +month + 1 : 1}-01`).toDate(),
       },
     },
 
