@@ -12,40 +12,13 @@ import {
 } from '@/app/components/ui/table';
 import moment from 'moment';
 import { FaNairaSign } from 'react-icons/fa6';
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuCheckboxItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from '@/app/components/ui/dropdown-menu';
-
-import 'react-datepicker/dist/react-datepicker.css';
-import { Button } from './ui/button';
 import { formatAmount } from '../utils/formatAmount';
 import { cn } from '../lib/utils';
 import ApproveAccountReport from '../admin/components/ApproveAccountReport';
 import Expenses from '../portal/components/Expenses';
 import DrinkSales from '../portal/components/DrinkSales';
-import { Input } from './ui/input';
-import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
-
-const month = [
-  'January',
-  'February',
-  'March',
-  'April',
-  'May',
-  'June',
-  'July',
-  'August',
-  'September',
-  'October',
-  'November',
-  'December',
-];
+import AccountReportActions from '../admin/components/AccountReportActions';
 
 export default function AccountReportTable({
   children,
@@ -59,12 +32,9 @@ export default function AccountReportTable({
   accountReport: any;
 }) {
   const searchParams = useSearchParams();
-  const [activeDate, setActiveDate] = useState({
-    month: Number(searchParams.get('month')) - 1 || moment().get('month'),
-    year: moment().get('year'),
-  });
+
   const [currAccountReport, setCurrAccountReport] = useState(accountReport);
-  const [sortApproved, setSortApproved] = useState('');
+
   console.log(searchParams.get('month'));
   interface LodgeSale {
     paymentType: 'CASH' | 'POS';
@@ -96,10 +66,6 @@ export default function AccountReportTable({
     };
   }
 
-  function formatDate(date: Date) {
-    return moment(date).format('MMMM Do YYYY');
-  }
-
   function objectToArrObj(obj: any) {
     if (!obj) return [];
     const result = Object.entries(obj)?.map(([key, value]) => {
@@ -112,84 +78,30 @@ export default function AccountReportTable({
     setCurrAccountReport(accountReport);
   }, [accountReport]);
 
-  function renderSortByApproved(status: string) {
-    setSortApproved(status);
-    setCurrAccountReport(
-      currAccountReport.toSorted(
-        (a: { approved: boolean }, b: { approved: boolean }): number => {
-          return status === 'approved'
-            ? (b.approved ? 1 : 0) - (a.approved ? 1 : 0)
-            : (a.approved ? 1 : 0) - (b.approved ? 1 : 0);
-        }
-      )
+  if (accountReport.length <= 0)
+    return (
+      <section className="px-6">
+        <AccountReportActions
+          name={name}
+          currAccountReport={currAccountReport}
+          setCurrAccountReport={setCurrAccountReport}
+        />
+        <div className="flex justify-center items-center h-[60vh]">
+          <h1 className="text-4xl font-semibold text-gray-700 max-sm:text-3xl text-center">
+            {name} has no account report yet.
+          </h1>
+        </div>
+      </section>
     );
-  }
-
-  function renderActiveDate(month: number, year: number) {
-    setActiveDate({ month, year });
-  }
 
   return (
     <section className="relative">
       {children}
-      <div className="flex items-center justify-between">
-        <div>
-          <p className="mb-3">Sort By</p>
-          <div className="flex gap-3 items-center relative z-[500] max-sm:left-11">
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="outline">Approved</Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent>
-                <DropdownMenuLabel>Approved Status</DropdownMenuLabel>
-                <DropdownMenuSeparator />
-                <DropdownMenuCheckboxItem
-                  checked={sortApproved === 'approved'}
-                  onCheckedChange={() => renderSortByApproved('approved')}
-                >
-                  Approved
-                </DropdownMenuCheckboxItem>
-                <DropdownMenuCheckboxItem
-                  checked={sortApproved === 'pending'}
-                  onCheckedChange={() => renderSortByApproved('pending')}
-                >
-                  Pending
-                </DropdownMenuCheckboxItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
-          </div>
-        </div>
-        <div className="">
-          <p className="mb-3">Filter by</p>
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="outline">Month</Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent>
-              <DropdownMenuLabel>Approved Status</DropdownMenuLabel>
-              <DropdownMenuSeparator />
-              {month.map((m, i) => (
-                <Link
-                  key={m}
-                  href={`/admin/account-report?acc=${name}&month=${
-                    i + 1
-                  }&year=${activeDate.year}`}
-                >
-                  <DropdownMenuCheckboxItem
-                    key={m}
-                    checked={activeDate.month === i}
-                    onCheckedChange={() =>
-                      renderActiveDate(i, moment().get('year'))
-                    }
-                  >
-                    {m}
-                  </DropdownMenuCheckboxItem>
-                </Link>
-              ))}
-            </DropdownMenuContent>
-          </DropdownMenu>
-        </div>
-      </div>
+      <AccountReportActions
+        name={name}
+        currAccountReport={currAccountReport}
+        setCurrAccountReport={setCurrAccountReport}
+      />
       <div className="">
         <h1 className="text-gray-700 font-bold text-4xl py-8 max-sm:pb-4 max-sm:text-2xl">
           {name[0].toUpperCase()}
@@ -206,7 +118,7 @@ export default function AccountReportTable({
                 {moment(report.checkInTime).format('MMMM Do, YYYY')}
               </p>
 
-              <div className="relative z-10">
+              <div className="relative z-10 flex items-center max-sm:flex-col gap-3">
                 {type === 'worker' && report.expenses.length <= 0 && (
                   <Expenses
                     savedExpenses={report.expenses}
