@@ -2,9 +2,18 @@ import prisma from '@/lib/prisma';
 import AccountReportTable from '@/app/components/AccountReportTable';
 import { getCookies } from '@/app/utils/cookies';
 
-export default async function Page() {
+export default async function Page({
+  searchParams,
+}: {
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+}) {
   let worker;
   const temporaryWorker = await getCookies('temporary-login');
+  const name = (await searchParams).acc;
+  const month = (await searchParams).month;
+  const year = (await searchParams).year;
+  if (!name || !month || !year || +month < 1 || +month > 12 || +year < 2000)
+    return <div>ken</div>;
   if (temporaryWorker)
     worker = await prisma.worker.findFirst({
       where: {

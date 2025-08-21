@@ -18,7 +18,9 @@ export default function TemporaryLogin({ name }: { name: string }) {
           <div className="right-3 gap-5 flex justify-center">
             <Link
               className={cn(buttonVariants({ variant: 'outline' }))}
-              href={`/portal/account-report?}`}
+              href={`/portal/account-report?acc=${name}&month=${
+                new Date().getMonth() + 1
+              }&year=${new Date().getFullYear()}`}
             >
               Account Report
             </Link>

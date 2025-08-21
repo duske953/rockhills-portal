@@ -8,7 +8,6 @@ export default async function page({
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }) {
   const name = (await searchParams).acc;
-  console.log(name);
   const month = (await searchParams).month;
   const year = (await searchParams).year;
   if (!name || !month || !year || +month < 1 || +month > 12 || +year < 2000)
