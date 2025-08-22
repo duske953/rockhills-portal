@@ -42,7 +42,9 @@ export default async function Page() {
         <div className="absolute right-3 gap-5 flex max-sm:py-10">
           <Link
             className={cn(buttonVariants({ variant: 'outline' }))}
-            href="/portal/account-report"
+            href={`/portal/account-report?acc=${activeUser.name}&month=${
+              new Date().getMonth() + 1
+            }&year=${new Date().getFullYear()}`}
           >
             Account Report
           </Link>
