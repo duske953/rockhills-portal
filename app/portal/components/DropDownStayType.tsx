@@ -10,11 +10,13 @@ import {
 export default function DropDownStayType({
   stayType,
   setStayType,
+  type,
 }: {
   stayType: { stay: string; checked: boolean }[];
   setStayType: React.Dispatch<
     React.SetStateAction<{ stay: string; checked: boolean }[]>
   >;
+  type: string;
 }) {
   function renderPaymentChange(activeStay: string) {
     setStayType(
@@ -37,7 +39,7 @@ export default function DropDownStayType({
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button className="rounded-none cursor-pointer" variant="outline">
-          METHOD OF STAY
+          {type}
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56">

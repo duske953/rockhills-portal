@@ -1,5 +1,5 @@
 'use server';
-import calculateApprovedAmount from '@/app/utils/calculateApprovedAmount';
+import { calculateLodgeAmount } from '@/app/utils/calculateLodgeAmount';
 import {
   isAccountAuthenticated,
   isWorkerAuthenticated,
@@ -36,32 +36,8 @@ const handleRegisterCustomer = tryCatchWrapper(
         checkInTime: new Date(),
       },
     });
-    const lodgeAmount = await prisma.customers.groupBy({
-      _sum: {
-        amount: true,
-      },
-      by: ['paymentType'],
-      where: {
-        workerId: worker?.id,
-      },
-    });
-    const doc = await prisma.worker.update({
-      where: { id: worker.id },
-      data: {
-        lodgeAmount,
-      },
-    });
-    const approvedAmount = calculateApprovedAmount(
-      doc.expenses,
-      doc.lodgeAmount,
-      doc.drinkSales
-    );
-    await prisma.worker.update({
-      where: { id: worker.id },
-      data: {
-        approvedAmount,
-      },
-    });
+
+    await calculateLodgeAmount(worker.id);
     return sendResponse('Customer registered', 200);
   }
 );

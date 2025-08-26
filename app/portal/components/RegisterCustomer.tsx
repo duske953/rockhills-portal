@@ -75,7 +75,6 @@ export default function RegisterCustomer() {
   const validPayment = isDropDownValid(payment);
   const validStayType = isDropDownValid(stayType);
   const validCustomerName = roomMetaData.customerName.length > 0;
-
   const validForm =
     !validAmount(validStayType, validRoom, formatAmount) ||
     !validCustomerName ||
@@ -84,7 +83,6 @@ export default function RegisterCustomer() {
     !validRoom ||
     !isNumberValid.isValid ||
     (validStayType.stay === 'FULL-TIME' && formatAmount < MIN_FULL_TIME_AMOUNT);
-
   async function renderRegisterCustomer() {
     const data = {
       room: validRoom.room,
@@ -104,13 +102,16 @@ export default function RegisterCustomer() {
 
     return notify(response?.message, 'register-customer', response.code);
   }
-
   return (
     <>
       <div className="flex gap-6 max-md:flex-wrap">
         <DropDownRooms activeRoom={activeRoom} setActiveRoom={setActiveRoom} />
         <DropDownPayment payments={payment} setPayment={setPayment} />
-        <DropDownStayType setStayType={setStayType} stayType={stayType} />
+        <DropDownStayType
+          setStayType={setStayType}
+          stayType={stayType}
+          type="METHOD OF STAY"
+        />
         <Input
           value={roomMetaData.amount}
           type="text"
@@ -118,7 +119,6 @@ export default function RegisterCustomer() {
           placeholder="Enter Amount"
         />
       </div>
-
       <div className="flex flex-col gap-4 py-8">
         <Input
           onChange={(e) => renderRoomMetaDataChange(e, 'customerName')}

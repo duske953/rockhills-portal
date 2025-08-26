@@ -1,4 +1,4 @@
-export default function calculateApprovedAmount(
+export function calculateApprovedAmount(
   expenses: Array<any>,
   lodgeAmount: Array<any>,
   drinkSales: any

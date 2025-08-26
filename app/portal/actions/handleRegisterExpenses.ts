@@ -1,5 +1,5 @@
 'use server';
-import calculateApprovedAmount from '@/app/utils/calculateApprovedAmount';
+import { calculateApprovedAmount } from '@/app/utils/calculateApprovedAmount';
 import revalidate from '@/app/utils/revalidate';
 import sendResponse from '@/app/utils/sendResponse';
 import tryCatchWrapper from '@/app/utils/tryCatchWrapper';

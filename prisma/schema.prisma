@@ -59,6 +59,7 @@ model Customers {
     checkInTime String
     workerId String? @db.ObjectId
     worker Worker? @relation(fields: [workerId],references: [id])
+    edit Boolean @default(false)
 }
 
 enum Role {

@@ -19,6 +19,7 @@ import Expenses from '../portal/components/Expenses';
 import DrinkSales from '../portal/components/DrinkSales';
 import { useSearchParams } from 'next/navigation';
 import AccountReportActions from '../admin/components/AccountReportActions';
+import EditCustomer from '../portal/EditCustomer';
 
 export default function AccountReportTable({
   children,
@@ -34,7 +35,6 @@ export default function AccountReportTable({
   const searchParams = useSearchParams();
 
   const [currAccountReport, setCurrAccountReport] = useState(accountReport);
-
   console.log(searchParams.get('month'));
   interface LodgeSale {
     paymentType: 'CASH' | 'POS';
@@ -207,7 +207,6 @@ export default function AccountReportTable({
                     ))}
                   </div>
                 </TableCaption>
-
                 <TableHeader>
                   <TableRow>
                     <TableHead>Name</TableHead>
@@ -226,6 +225,7 @@ export default function AccountReportTable({
                       name: string;
                       phoneNumber: string;
                       room: string;
+                      edit: boolean;
                       amount: number;
                       paymentType: string;
                       stayType: string;
@@ -242,6 +242,16 @@ export default function AccountReportTable({
                         <TableCell>{customer.paymentType}</TableCell>
                         <TableCell>{customer.stayType}</TableCell>
                         <TableCell>{customer.checkInTime}</TableCell>
+                        <TableCell>
+                          {type === 'worker' && !customer.edit && (
+                            <EditCustomer
+                              id={customer.id}
+                              room={customer.room as unknown as number}
+                              amount={customer.amount as unknown as string}
+                              stay={customer.stayType}
+                            />
+                          )}
+                        </TableCell>
                       </TableRow>
                     )
                   )}

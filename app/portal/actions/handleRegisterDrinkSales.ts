@@ -1,6 +1,6 @@
 'use server';
 
-import calculateApprovedAmount from '@/app/utils/calculateApprovedAmount';
+import { calculateApprovedAmount } from '@/app/utils/calculateApprovedAmount';
 import { isAccountAuthenticated } from '@/app/utils/isAutenticated';
 import revalidate from '@/app/utils/revalidate';
 import sendResponse from '@/app/utils/sendResponse';
