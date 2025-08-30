@@ -21,16 +21,21 @@ import useLoadingBtn from '../hooks/useLoadingBtn';
 
 export default function EditCustomer({
   id,
+  workerId,
   room,
   amount,
   stay,
 }: {
   id: string;
+  workerId: string;
   room: number;
   amount: string;
   stay: string;
 }) {
-  const [editInfo, setEditInfo] = useState<{ room: number; amount: string }>({
+  const [editInfo, setEditInfo] = useState<{
+    room: number | string;
+    amount: string;
+  }>({
     room,
     amount,
   });
@@ -65,6 +70,7 @@ export default function EditCustomer({
     e.preventDefault();
     const response = await handleEditCustomer(
       id,
+      workerId,
       room,
       editInfo.room,
       removeCommaAmount(String(editInfo.amount)),
@@ -87,11 +93,12 @@ export default function EditCustomer({
         <form className="flex flex-col gap-3">
           <Input
             value={editInfo.room}
-            max={24}
             onChange={(e) =>
-              setEditInfo({ ...editInfo, room: parseInt(e.target.value) })
+              setEditInfo({
+                ...editInfo,
+                room: +e.target.value === 0 ? '' : +e.target.value,
+              })
             }
-            min={1}
             type="number"
             placeholder="Enter room number"
           />
@@ -105,7 +112,6 @@ export default function EditCustomer({
             }
             placeholder="Enter amount paid"
           />
-
           <DropDownStayType
             stayType={stayType}
             setStayType={setStayType}

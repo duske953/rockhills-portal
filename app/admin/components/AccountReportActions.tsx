@@ -1,3 +1,4 @@
+import AccountDateFilter from '@/app/components/AccountDateFilter';
 import { Button } from '@/app/components/ui/button';
 import {
   DropdownMenu,
@@ -7,38 +8,24 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/app/components/ui/dropdown-menu';
-import { Input } from '@/app/components/ui/input';
-import moment from 'moment';
-import Link from 'next/link';
-import { useSearchParams } from 'next/navigation';
+
 import { useState } from 'react';
 
-const month = [
-  'January',
-  'February',
-  'March',
-  'April',
-  'May',
-  'June',
-  'July',
-  'August',
-  'September',
-  'October',
-  'November',
-  'December',
-];
+interface AccountReport {
+  approved: boolean;
+  [key: string]: any;
+}
 
 export default function AccountReportActions({
   currAccountReport,
   setCurrAccountReport,
-  name,
+}: {
+  currAccountReport: AccountReport[];
+  setCurrAccountReport: (reports: AccountReport[]) => void;
+  name: string;
 }) {
   const [sortApproved, setSortApproved] = useState('');
-  const searchParams = useSearchParams();
-  const [activeDate, setActiveDate] = useState({
-    month: Number(searchParams.get('month')) || moment().get('month') + 1,
-    year: moment().get('year'),
-  });
+
   function renderSortByApproved(status: string) {
     setSortApproved(status);
     setCurrAccountReport(
@@ -50,10 +37,6 @@ export default function AccountReportActions({
         }
       )
     );
-  }
-
-  function renderActiveDate(month: number, year: number) {
-    setActiveDate({ month, year });
   }
 
   return (
@@ -86,37 +69,7 @@ export default function AccountReportActions({
       </div>
       <div className="">
         <p className="mb-3">Filter by</p>
-        <div className="flex items-center gap-3">
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="outline">Month</Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent>
-              <DropdownMenuLabel>Approved Status</DropdownMenuLabel>
-              <DropdownMenuSeparator />
-              {month.map((m, i) => (
-                <Link
-                  key={m}
-                  href={`/admin/account-report?acc=${name}&month=${
-                    i + 1
-                  }&year=${activeDate.year}`}
-                >
-                  <DropdownMenuCheckboxItem
-                    key={m}
-                    checked={activeDate.month === i + 1}
-                    onCheckedChange={() =>
-                      renderActiveDate(i + 1, moment().get('year'))
-                    }
-                  >
-                    {m}
-                  </DropdownMenuCheckboxItem>
-                </Link>
-              ))}
-            </DropdownMenuContent>
-          </DropdownMenu>
-
-          <Input placeholder="Enter year" className="rounded-none" />
-        </div>
+        <AccountDateFilter />
       </div>
     </div>
   );

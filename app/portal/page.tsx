@@ -7,6 +7,7 @@ import { getCookies } from '../utils/cookies';
 import TemporaryLogin from './components/TemporaryLogin';
 import { redirect } from 'next/navigation';
 import RegisterCustomer from './components/RegisterCustomer';
+import moment from 'moment';
 
 export default async function Page() {
   const temporaryWorker = await getCookies('temporary-login');
@@ -41,6 +42,15 @@ export default async function Page() {
 
         <div className="absolute right-3 gap-5 flex max-sm:py-10">
           <Link
+            className={buttonVariants({ variant: 'outline' })}
+            href={`/rockins-history/?month=${moment().format(
+              'M'
+            )}&year=${moment().format('YYYY')}&worker=${activeUser.name}`}
+          >
+            Rockins Summary
+          </Link>
+
+          <Link
             className={cn(buttonVariants({ variant: 'outline' }))}
             href={`/portal/account-report?acc=${activeUser.name}&month=${
               new Date().getMonth() + 1
@@ -48,9 +58,11 @@ export default async function Page() {
           >
             Account Report
           </Link>
+
           <DeregisterRoom />
         </div>
       </div>
+
       <p className="absolute text-xs right-3 top-3 text-red-500 uppercase font-semibold">
         Ensure all fields are correct before proceeding
       </p>

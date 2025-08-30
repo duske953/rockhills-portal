@@ -84,6 +84,7 @@ export default function RegisterCustomer() {
     !isNumberValid.isValid ||
     (validStayType.stay === 'FULL-TIME' && formatAmount < MIN_FULL_TIME_AMOUNT);
   async function renderRegisterCustomer() {
+    const month = moment().month();
     const data = {
       room: validRoom.room,
       name: roomMetaData.customerName,
@@ -91,7 +92,8 @@ export default function RegisterCustomer() {
       phoneNumber: `+234-${roomMetaData.customerNumber}`,
       stayType: validStayType.stay,
       paymentType: validPayment.type,
-      checkInTime: moment().format('h:mm:ss a'),
+      month: month + 1,
+      checkInTime: moment().format('YYYY-MM h:mm:ss a'),
     };
     toast.dismiss('confirm');
     toast.loading('Registering...', {

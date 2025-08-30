@@ -17,7 +17,6 @@ import { cn } from '../lib/utils';
 import ApproveAccountReport from '../admin/components/ApproveAccountReport';
 import Expenses from '../portal/components/Expenses';
 import DrinkSales from '../portal/components/DrinkSales';
-import { useSearchParams } from 'next/navigation';
 import AccountReportActions from '../admin/components/AccountReportActions';
 import EditCustomer from '../portal/EditCustomer';
 
@@ -32,10 +31,8 @@ export default function AccountReportTable({
   name: string;
   accountReport: any;
 }) {
-  const searchParams = useSearchParams();
-
   const [currAccountReport, setCurrAccountReport] = useState(accountReport);
-  console.log(searchParams.get('month'));
+
   interface LodgeSale {
     paymentType: 'CASH' | 'POS';
     _sum: {
@@ -215,7 +212,7 @@ export default function AccountReportTable({
                     <TableHead>Amount</TableHead>
                     <TableHead>Method</TableHead>
                     <TableHead>Stay</TableHead>
-                    <TableHead>Check-In-Time</TableHead>
+                    {/* <TableHead>Check-In-Time</TableHead> */}
                   </TableRow>
                 </TableHeader>
                 <TableBody className="last:mt-9">
@@ -230,6 +227,7 @@ export default function AccountReportTable({
                       paymentType: string;
                       stayType: string;
                       checkInTime: string;
+                      workerId: string;
                     }) => (
                       <TableRow className="pb-9" key={customer.id}>
                         <TableCell>{customer.name}</TableCell>
@@ -241,11 +239,12 @@ export default function AccountReportTable({
                         </TableCell>
                         <TableCell>{customer.paymentType}</TableCell>
                         <TableCell>{customer.stayType}</TableCell>
-                        <TableCell>{customer.checkInTime}</TableCell>
+                        {/* <TableCell>{customer.checkInTime}</TableCell> */}
                         <TableCell>
                           {type === 'worker' && !customer.edit && (
                             <EditCustomer
                               id={customer.id}
+                              workerId={customer.workerId}
                               room={customer.room as unknown as number}
                               amount={customer.amount as unknown as string}
                               stay={customer.stayType}

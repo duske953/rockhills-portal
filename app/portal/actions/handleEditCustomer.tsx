@@ -1,10 +1,7 @@
 'use server';
 
 import { calculateLodgeAmount } from '@/app/utils/calculateLodgeAmount';
-import {
-  isAccountAuthenticated,
-  isWorkerAuthenticated,
-} from '@/app/utils/isAutenticated';
+import { isAccountAuthenticated } from '@/app/utils/isAutenticated';
 import revalidate from '@/app/utils/revalidate';
 import sendResponse from '@/app/utils/sendResponse';
 import tryCatchWrapper from '@/app/utils/tryCatchWrapper';
@@ -13,6 +10,7 @@ import prisma from '@/lib/prisma';
 const handleEditCustomer = tryCatchWrapper(
   async (
     id: string,
+    workerId: string,
     oldRoom: number,
     room: number,
     amount: number,
@@ -26,8 +24,10 @@ const handleEditCustomer = tryCatchWrapper(
       where: { room: oldRoom },
       data: { booked: false },
     });
+
     await prisma.rooms.update({ where: { room }, data: { booked: true } });
-    const worker = await isWorkerAuthenticated();
+    const worker = await prisma.worker.findFirst({ where: { id: workerId } });
+
     if (!worker || worker.approved) return sendResponse('Unauthorized', 401);
     const activeAccount = await isAccountAuthenticated(worker.name);
     if (!activeAccount) return sendResponse('Unauthorized', 401);

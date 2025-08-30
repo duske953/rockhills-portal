@@ -6,7 +6,7 @@ import { ReactNode } from 'react';
 import Logout from '../../components/Logout';
 import AccountDropdown from '../components/AccocuntDropdown';
 import prisma from '@/lib/prisma';
-
+import moment from 'moment';
 export default async function Page({ children }: { children: ReactNode }) {
   if (!(await getCookies('auth-admin'))) {
     redirect('/admin');
@@ -15,6 +15,17 @@ export default async function Page({ children }: { children: ReactNode }) {
   const activeAccount = await prisma.worker.findFirst({
     where: { isActive: true },
   });
+
+  // const totalLodgers = await prisma.customers.findMany();
+  // totalLodgers.forEach(async (lodger) => {
+  //   const dateWithTime = moment(
+  //     lodger.checkInTime,
+  //     'YYYY-MM-DD hh:mm A"'
+  //   ).format('YYYY-MM hh:mm A');
+
+  //   await prisma.customers.updateMany({ data: { checkInTime: dateWithTime } });
+  // });
+
   return (
     <section className="max-sm:pt-16">
       <div className="max-w-3xl mx-auto px-6 py-10 text-center flex flex-col gap-14 relative">
@@ -36,9 +47,19 @@ export default async function Page({ children }: { children: ReactNode }) {
             accounts={accounts}
             activeAcc={activeAccount?.name}
           />
+
+          <Link
+            className={buttonVariants({ variant: 'outline' })}
+            href={`/rockins-history/?month=${moment().format(
+              'M'
+            )}&year=${moment().format('YYYY')}`}
+          >
+            Rockins Summary
+          </Link>
         </div>
         {children}
       </div>
+
       <Logout cookie="auth-admin" />
     </section>
   );
