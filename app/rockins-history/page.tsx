@@ -10,9 +10,15 @@ async function getWorkers(month: string, name: any) {
     where: {
       name,
       checkInTime: {
-        gte: new Date(`2025-0${+month}-01T00:00:00.000Z`), // start of August
+        gte: new Date(`2025-${month.padStart(2, '0')}-01T00:00:00.000Z`), // start of August
         lt: new Date(
-          `2025-0${+month === 12 ? 1 : +month + 1}-01T00:00:00.000Z`
+          `2025-${
+            +month === 12
+              ? '01'
+              : +month + 1 <= 9
+              ? `0${+month + 1}`
+              : `${+month + 1}`
+          }-01T00:00:00.000Z`
         ), // start of September
       },
     },
