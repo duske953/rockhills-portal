@@ -54,7 +54,7 @@ export default async function Page({ children }: { children: ReactNode }) {
               'M'
             )}&year=${moment().format('YYYY')}`}
           >
-            Rockins Summary
+            RockHills Summary
           </Link>
         </div>
         {children}

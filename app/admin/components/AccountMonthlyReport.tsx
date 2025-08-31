@@ -63,12 +63,20 @@ export default function AccountMonthlyReport({
         <DropdownMenuTrigger asChild>
           <Button variant="outline">Worker Monthly Report</Button>
         </DropdownMenuTrigger>
-        <DropdownMenuContent>
-          <DropdownMenuLabel>Approved Status</DropdownMenuLabel>
+        <DropdownMenuContent className="w-56 max-sm:w-64">
+          <DropdownMenuLabel>Workers</DropdownMenuLabel>
           <DropdownMenuSeparator />
           {account.map((w) => (
-            <DropdownMenuCheckboxItem key={w.name}>
+            <DropdownMenuCheckboxItem
+              checked={
+                searchParams.get('worker')?.toLowerCase() ===
+                w.name.toLowerCase()
+              }
+              className="size-full"
+              key={w.name}
+            >
               <Link
+                className="size-full"
                 href={`/rockins-history?month=${searchParams.get(
                   'month'
                 )}&year=2025&worker=${w.name}`}

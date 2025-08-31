@@ -47,7 +47,7 @@ export default async function Page() {
               'M'
             )}&year=${moment().format('YYYY')}&worker=${activeUser.name}`}
           >
-            Rockins Summary
+            RockHills Summary
           </Link>
 
           <Link
