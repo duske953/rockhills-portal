@@ -92,7 +92,6 @@ export default function RegisterCustomer() {
       phoneNumber: `+234-${roomMetaData.customerNumber}`,
       stayType: validStayType.stay,
       paymentType: validPayment.type,
-      month: month + 1,
       checkInTime: moment().format('YYYY-MM h:mm:ss a'),
     };
     toast.dismiss('confirm');
