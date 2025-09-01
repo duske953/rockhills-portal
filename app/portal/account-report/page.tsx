@@ -1,6 +1,7 @@
 import prisma from '@/lib/prisma';
 import AccountReportTable from '@/app/components/AccountReportTable';
 import { getCookies } from '@/app/utils/cookies';
+import moment from 'moment';
 
 export default async function Page({
   searchParams,
@@ -41,7 +42,12 @@ export default async function Page({
   const accountReport = await prisma.worker.findMany({
     where: {
       name: worker.name,
+      checkInTime: {
+        gte: moment(`${year}-${+month}-01`).toDate(),
+        lt: moment(`${year}-${+month !== 12 ? +month + 1 : 1}-01`).toDate(),
+      },
     },
+
     orderBy: {
       checkInTime: 'desc',
     },
