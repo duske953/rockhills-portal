@@ -19,6 +19,7 @@ interface AccountReport {
 export default function AccountReportActions({
   currAccountReport,
   setCurrAccountReport,
+  name,
 }: {
   currAccountReport: AccountReport[];
   setCurrAccountReport: (reports: AccountReport[]) => void;
@@ -69,7 +70,7 @@ export default function AccountReportActions({
       </div>
       <div className="">
         <p className="mb-3">Filter by</p>
-        <AccountDateFilter />
+        <AccountDateFilter type="acc" value={name} />
       </div>
     </div>
   );

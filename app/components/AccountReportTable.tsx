@@ -19,6 +19,7 @@ import Expenses from '../portal/components/Expenses';
 import DrinkSales from '../portal/components/DrinkSales';
 import AccountReportActions from '../admin/components/AccountReportActions';
 import EditCustomer from '../portal/EditCustomer';
+import { useSearchParams } from 'next/navigation';
 
 export default function AccountReportTable({
   children,
@@ -32,7 +33,10 @@ export default function AccountReportTable({
   accountReport: any;
 }) {
   const [currAccountReport, setCurrAccountReport] = useState(accountReport);
-
+  const searchParams = useSearchParams();
+  const selectedMonth = moment()
+    .month(+searchParams.get('month')! - 1)
+    .format('MMMM');
   interface LodgeSale {
     paymentType: 'CASH' | 'POS';
     _sum: {
@@ -84,8 +88,9 @@ export default function AccountReportTable({
           setCurrAccountReport={setCurrAccountReport}
         />
         <div className="flex justify-center items-center h-[60vh]">
-          <h1 className="text-4xl font-semibold text-gray-700 max-sm:text-3xl text-center">
-            {name} has no account report yet.
+          <h1 className="text-4xl font-semibold text-gray-700 max-sm:text-2xl text-center">
+            <span className="capitalize">{name}</span> has no account report yet
+            for ({selectedMonth})
           </h1>
         </div>
       </section>
@@ -102,7 +107,7 @@ export default function AccountReportTable({
       <div className="">
         <h1 className="text-gray-700 font-bold text-4xl py-8 max-sm:pb-4 max-sm:text-2xl">
           {name[0].toUpperCase()}
-          {name.slice(1, name.length)}'s Summary
+          {name.slice(1, name.length)}'s Summary for ({selectedMonth})
         </h1>
 
         <section className="flex flex-col relative gap-3">
