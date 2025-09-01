@@ -99,7 +99,7 @@ export default async function Page({
       <div className="px-4 max-w-3xl mx-auto py-10">
         <div className="py-7">
           <AccountDateFilter
-            type={workerName ? 'worker' : 'worker'}
+            type={workerName ? 'worker' : null}
             value={workerName}
           />
         </div>

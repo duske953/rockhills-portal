@@ -33,7 +33,7 @@ export default function AccountDateFilter({
   type,
   value,
 }: {
-  type?: string;
+  type?: string | null;
   value?: string;
 }) {
   const searchParams = useSearchParams();
