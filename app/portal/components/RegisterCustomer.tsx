@@ -84,7 +84,6 @@ export default function RegisterCustomer() {
     !isNumberValid.isValid ||
     (validStayType.stay === 'FULL-TIME' && formatAmount < MIN_FULL_TIME_AMOUNT);
   async function renderRegisterCustomer() {
-    const month = moment().month();
     const data = {
       room: validRoom.room,
       name: roomMetaData.customerName,
