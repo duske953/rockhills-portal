@@ -121,7 +121,7 @@ export default function AccountReportTable({
               </p>
 
               <div className="relative z-10 flex items-center max-sm:flex-col max-sm:items-start gap-3">
-                {type === 'worker' && report.expenses.length <= 0 && (
+                {type === 'worker' && (
                   <Expenses
                     savedExpenses={report.expenses}
                     workerId={report.id}

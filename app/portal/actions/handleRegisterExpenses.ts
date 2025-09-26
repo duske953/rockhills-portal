@@ -16,7 +16,7 @@ const handleRegisterExpenses = tryCatchWrapper(
   ) => {
     try {
       const activeWorker = await prisma.worker.findFirst({
-        where: { approved: false, id: workerId, isActive: true },
+        where: { approved: false, id: workerId },
       });
 
       if (!activeWorker) return sendResponse('Unauthorized', 401);
