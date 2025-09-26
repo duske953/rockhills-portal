@@ -11,5 +11,5 @@ export function formateInputAmount(...num: Array<any>) {
 }
 
 export function removeCommaAmount(num: string) {
-  return +num.replaceAll(',', '');
+  return +num?.replaceAll(',', '');
 }

@@ -85,13 +85,13 @@ export default function Expenses({
     const filterExpenses = expenses
       .filter(
         (expense) =>
-          (removeCommaAmount(expense.amount) || 0) > 0 &&
+          (removeCommaAmount(String(expense.amount)) || 0) > 0 &&
           expense.expense.length > 0
       )
       .map((expense) => {
         return {
           ...expense,
-          amount: removeCommaAmount(expense.amount),
+          amount: removeCommaAmount(String(expense.amount)),
         };
       });
 
@@ -129,7 +129,7 @@ export default function Expenses({
               />
               <Input
                 placeholder="amount"
-                value={expenses[id].amount}
+                value={formateInputAmount(expenses[id].amount)}
                 type="text"
                 onChange={(e) => updateExpenses(e, 'amount', id)}
               />
