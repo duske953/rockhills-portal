@@ -34,7 +34,7 @@ export default async function Page() {
   return (
     <section className="pb-10">
       <div className="max-w-4xl mx-auto px-3 py-4 text-center relative">
-        <p className="py-8 text-3xl text-gray-600 font-bold">
+        <p className="py-8 text-3xl text-gray-600 font-bold capitalize">
           Welcome {activeUser?.name || 'Guest'}
         </p>
 

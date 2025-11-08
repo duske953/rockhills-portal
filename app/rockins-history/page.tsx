@@ -10,7 +10,7 @@ async function getWorkers(month: string, name: any) {
     where: {
       name,
       checkInTime: {
-        gte: new Date(`2025-${month.padStart(2, '0')}-01T00:00:00.000Z`), // start of August
+        gte: new Date(`2025-${month.padStart(2, '0')}T00:00:00.000Z`), // start of August
         lt: new Date(
           `2025-${
             +month === 12
@@ -18,7 +18,7 @@ async function getWorkers(month: string, name: any) {
               : +month + 1 <= 9
               ? `0${+month + 1}`
               : `${+month + 1}`
-          }-01T00:00:00.000Z`
+          }T00:00:00.000Z`
         ), // start of September
       },
     },
@@ -59,7 +59,7 @@ export default async function Page({
   const totalLodgers = await prisma.customers.findMany({
     where: {
       checkInTime: {
-        startsWith: `${moment().year()}-0${+month}`,
+        startsWith: `${moment().year()}-${+month <= 9 ? `0${month}` : month}`,
       },
     },
   });
@@ -126,7 +126,7 @@ export default async function Page({
             <ul className="flex flex-col gap-7 text-xl">
               <li>
                 You had <span className="font-bold">{totalLodgers.length}</span>{' '}
-                customers for the month of sepetember{' '}
+                customers for the month of {formatMonth}
               </li>
               <DisplayAmount type="Lodge Revenue" amount={totalLodgeRevenue} />
               <DisplayAmount type="Drink Revenue" amount={totalDrinkRevenue} />
@@ -146,7 +146,7 @@ export default async function Page({
         <AccountMonthlyReport
           account={account ?? []}
           worker={worker as any}
-          isCisCurrWorkerApproved={isCurrWorkerApproved}
+          isCurrWorkerApproved={isCurrWorkerApproved}
         />
       </div>
     </section>
