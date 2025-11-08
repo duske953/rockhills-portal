@@ -16,7 +16,7 @@ import { useSearchParams } from 'next/navigation';
 export default function AccountMonthlyReport({
   worker,
   account,
-  isCisCurrWorkerApproved,
+  isCurrWorkerApproved,
 }: {
   worker: Array<{
     customers: Array<{ amount: number }>;
@@ -24,14 +24,13 @@ export default function AccountMonthlyReport({
     drinkSales: { pos: number; cash: number };
   }>;
   account: Array<{ name: string }>;
-  isCisCurrWorkerApproved: boolean;
+  isCurrWorkerApproved: boolean;
 }) {
   const searchParams = useSearchParams();
   const workerName = searchParams.get('worker');
   const totalLodgers = worker
     .filter((w) => w.customers)
     .reduce((acc, w) => acc + w.customers.length, 0);
-
   const totalLodgeRevenue = worker
     .filter((w) => w.customers)
     .reduce(
@@ -92,14 +91,14 @@ export default function AccountMonthlyReport({
           No data available for the selected worker.
         </p>
       )}
-      {!isCisCurrWorkerApproved && (
+      {!isCurrWorkerApproved && (
         <p className="text-center text-gray-500 mt-10">
           <span className="capitalize">{searchParams.get('worker')}</span>'s
           account has not been totally approved yet. Please contact the
           administrator.
         </p>
       )}
-      {worker.length > 0 && isCisCurrWorkerApproved && (
+      {worker.length > 0 && isCurrWorkerApproved && (
         <div className="py-5">
           <p className="text-4xl text-gray-700 font-bold">
             Monthly report for {workerName}
