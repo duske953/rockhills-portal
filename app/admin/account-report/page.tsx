@@ -23,7 +23,7 @@ export default async function page({
         lt: moment(startDate).add(1, 'month').toDate(),
       },
     },
-  }),
+  });
   return (
     <section className="max-w-3xl mx-auto relative py-10 max-sm:px-6">
       <AccountReportTable
