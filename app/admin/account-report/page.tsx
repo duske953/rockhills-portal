@@ -19,16 +19,10 @@ export default async function page({
         mode: 'insensitive',
       },
       checkInTime: {
-        gte: moment(`${year}-${+month}-01`).toDate(),
-        lt: moment(`${year}-${+month !== 12 ? +month + 1 : 1}-01`).toDate(),
+        gte: moment(`${year}-${month}-01`).toDate(),
+        lt: moment(startDate).add(1, 'month').toDate(),
       },
     },
-
-    include: { customers: true },
-    orderBy: {
-      checkInTime: 'desc',
-    },
-  });
 
   return (
     <section className="max-w-3xl mx-auto relative py-10 max-sm:px-6">
