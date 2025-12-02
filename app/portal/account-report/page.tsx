@@ -43,8 +43,8 @@ export default async function Page({
     where: {
       name: worker.name,
       checkInTime: {
-        gte: moment(`${year}-${+month}-01`).toDate(),
-        lt: moment(`${year}-${+month !== 12 ? +month + 1 : 1}-01`).toDate(),
+        gte: moment(`${year}-${month}-01`).toDate(),
+        lt: moment(startDate).add(1, 'month').toDate(),
       },
     },
 
