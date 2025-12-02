@@ -38,13 +38,14 @@ export default async function Page({
         </div>
       </section>
     );
-
+const startDate = moment(`${year}-${month}-01`).toDate();
+const endDate = moment(startDate).add(1, 'month').toDate();
   const accountReport = await prisma.worker.findMany({
     where: {
       name: worker.name,
       checkInTime: {
-        gte: moment(`${year}-${month}-01`).toDate(),
-        lt: moment(startDate).add(1, 'month').toDate(),
+        gte: startDate,
+        lt: endDate,
       },
     },
 
