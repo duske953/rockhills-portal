@@ -27,6 +27,10 @@ const endDate = moment(startDate).add(1, 'month').toDate();
       lt:endDate
       },
     },
+orderBy: {
+      checkInTime: 'desc',
+    },
+    include: { customers: true },    
   });
   return (
     <section className="max-w-3xl mx-auto relative py-10 max-sm:px-6">
