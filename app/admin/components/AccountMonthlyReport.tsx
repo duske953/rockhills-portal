@@ -17,6 +17,7 @@ export default function AccountMonthlyReport({
   worker,
   account,
   isCurrWorkerApproved,
+  month,
 }: {
   worker: Array<{
     customers: Array<{ amount: number }>;
@@ -25,6 +26,7 @@ export default function AccountMonthlyReport({
   }>;
   account: Array<{ name: string }>;
   isCurrWorkerApproved: boolean;
+  month: string;
 }) {
   const searchParams = useSearchParams();
   const workerName = searchParams.get('worker');
@@ -107,7 +109,7 @@ export default function AccountMonthlyReport({
             <p>
               <span className="capitalize">{workerName}</span>, had{' '}
               <span className="font-bold">{totalLodgers} </span>
-              lodgers for the month of September
+              lodgers for the month of {month}
             </p>
             <DisplayAmount type="Lodge Revenue" amount={totalLodgeRevenue} />
             <DisplayAmount type="Drink Revenue" amount={totalDrinkRevenue} />

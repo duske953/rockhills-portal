@@ -12,10 +12,9 @@ export default async function page({
   const year = (await searchParams).year;
   if (!name || !month || !year || +month < 1 || +month > 12 || +year < 2000)
     return <div>ken</div>;
-const startDate = moment(`${year}-${month}-01`).toDate();
-const endDate = moment(startDate).add(1, 'month').toDate();
+  const startDate = moment(`${year}-${month}-01`).toDate();
+  const endDate = moment(startDate).add(1, 'month').toDate();
 
-  
   const accountReport = await prisma.worker.findMany({
     where: {
       name: {
@@ -24,13 +23,13 @@ const endDate = moment(startDate).add(1, 'month').toDate();
       },
       checkInTime: {
         gte: startDate,
-      lt:endDate
+        lt: endDate,
       },
     },
-orderBy: {
+    orderBy: {
       checkInTime: 'desc',
     },
-    include: { customers: true },    
+    include: { customers: true },
   });
   return (
     <section className="max-w-3xl mx-auto relative py-10 max-sm:px-6">

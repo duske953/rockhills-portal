@@ -5,14 +5,14 @@ import { getCookies } from '../utils/cookies';
 import { DisplayAmount } from './components/DisplayAmount';
 import AccountDateFilter from '../components/AccountDateFilter';
 
-async function getWorkers(month: string, name: any) {
+async function getWorkers(month: string, name: any, year: string) {
   return await prisma.worker.findMany({
     where: {
       name,
       checkInTime: {
-        gte: new Date(`2025-${month.padStart(2, '0')}T00:00:00.000Z`), // start of August
+        gte: new Date(`${year}-${month.padStart(2, '0')}T00:00:00.000Z`), // start of August
         lt: new Date(
-          `2025-${
+          `${year}-${
             +month === 12
               ? '01'
               : +month + 1 <= 9
@@ -53,13 +53,13 @@ export default async function Page({
   //   return [];
   // }
 
-  const worker = await getWorkers(month, workerName || '');
-  const workers = await getWorkers(month, {});
+  const worker = await getWorkers(month, workerName || '', year);
+  const workers = await getWorkers(month, {}, year);
 
   const totalLodgers = await prisma.customers.findMany({
     where: {
       checkInTime: {
-        startsWith: `${moment().year()}-${+month <= 9 ? `0${month}` : month}`,
+        startsWith: `${year}-${+month <= 9 ? `0${month}` : month}`,
       },
     },
   });
@@ -144,6 +144,7 @@ export default async function Page({
         )}
 
         <AccountMonthlyReport
+          month={formatMonth}
           account={account ?? []}
           worker={worker as any}
           isCurrWorkerApproved={isCurrWorkerApproved}

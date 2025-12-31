@@ -90,7 +90,7 @@ export default function AccountReportTable({
         <div className="flex justify-center items-center h-[60vh]">
           <h1 className="text-4xl font-semibold text-gray-700 max-sm:text-2xl text-center">
             <span className="capitalize">{name}</span> has no account report yet
-            for ({selectedMonth})
+            for ({selectedMonth}, {searchParams.get('year')})
           </h1>
         </div>
       </section>
@@ -123,6 +123,7 @@ export default function AccountReportTable({
               <div className="relative z-10 flex items-center max-sm:flex-col max-sm:items-start gap-3">
                 {type === 'worker' && (
                   <Expenses
+                    key={crypto.randomUUID()}
                     savedExpenses={report.expenses}
                     workerId={report.id}
                   />
@@ -311,7 +312,7 @@ export default function AccountReportTable({
                     </p>
                     <div className="flex-col mt-3 flex gap-3">
                       {report.expenses.map((expense: any) => (
-                        <div key={expense.expense} className="flex gap-10">
+                        <div key={crypto.randomUUID()} className="flex gap-10">
                           <span className="w-28">{expense.expense}</span>
                           <span className="flex items-center">
                             <FaNairaSign />

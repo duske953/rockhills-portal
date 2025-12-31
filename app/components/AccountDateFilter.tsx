@@ -9,9 +9,9 @@ import {
   DropdownMenuSeparator,
   DropdownMenuCheckboxItem,
 } from './ui/dropdown-menu';
-import { useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 import moment from 'moment';
-import { usePathname, useSearchParams } from 'next/navigation';
+import { usePathname, useSearchParams, useRouter } from 'next/navigation';
 import { Input } from './ui/input';
 
 const month = [
@@ -38,12 +38,29 @@ export default function AccountDateFilter({
 }) {
   const searchParams = useSearchParams();
   const pathname = usePathname();
+  console.log(pathname);
+  const router = useRouter();
   const [activeDate, setActiveDate] = useState({
     month: Number(searchParams.get('month')) || moment().get('month') + 1,
-    year: moment().get('year'),
+    year: searchParams.get('year') || moment().get('year'),
   });
   function renderActiveDate(month: number, year: number) {
     setActiveDate({ month, year });
+  }
+
+  function renderActiveYear(e: ChangeEvent<HTMLInputElement>) {
+    setActiveDate((prev) => ({
+      ...prev,
+      year: +e.target.value || moment().get('year'),
+    }));
+  }
+
+  function renderSubmitReportYear() {
+    router.push(
+      `${pathname}?month=${activeDate.month}&year=${activeDate.year}${
+        pathname === '/rockins-history' ? '' : `&acc=${searchParams.get('acc')}`
+      }`
+    );
   }
 
   return (
@@ -66,7 +83,7 @@ export default function AccountDateFilter({
                 key={m}
                 checked={activeDate.month === i + 1}
                 onCheckedChange={() =>
-                  renderActiveDate(i + 1, moment().get('year'))
+                  renderActiveDate(i + 1, activeDate.year as number)
                 }
               >
                 {m}
@@ -75,8 +92,15 @@ export default function AccountDateFilter({
           ))}
         </DropdownMenuContent>
       </DropdownMenu>
-
-      <Input placeholder="Enter year" className="rounded-none" />
+      <div className="flex items-center gap-2">
+        <Input
+          value={activeDate.year}
+          onChange={renderActiveYear}
+          placeholder="Enter year"
+          className="rounded-none"
+        />
+        <Button onClick={renderSubmitReportYear}>Submit</Button>
+      </div>
     </div>
   );
 }
