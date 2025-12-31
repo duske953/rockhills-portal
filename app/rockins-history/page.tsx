@@ -6,20 +6,15 @@ import { DisplayAmount } from './components/DisplayAmount';
 import AccountDateFilter from '../components/AccountDateFilter';
 
 async function getWorkers(month: string, name: any, year: string) {
+  const startDate = moment(`${year}-${month}-01`).toDate();
+  const endDate = moment(startDate).add(1, 'month').toDate();
   return await prisma.worker.findMany({
     where: {
       name,
       checkInTime: {
-        gte: new Date(`${year}-${month.padStart(2, '0')}T00:00:00.000Z`), // start of August
-        lt: new Date(
-          `${year}-${
-            +month === 12
-              ? '01'
-              : +month + 1 <= 9
-              ? `0${+month + 1}`
-              : `${+month + 1}`
-          }T00:00:00.000Z`
-        ), // start of September
+        gte: startDate,
+        lt: endDate,
+        // start of September
       },
     },
     include: { customers: name ? true : false },
