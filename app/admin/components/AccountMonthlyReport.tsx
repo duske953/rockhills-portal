@@ -80,7 +80,7 @@ export default function AccountMonthlyReport({
                 className="size-full"
                 href={`/rockins-history?month=${searchParams.get(
                   'month'
-                )}&year=2025&worker=${w.name}`}
+                )}&year=${searchParams.get('year')}&worker=${w.name}`}
               >
                 {w.name.charAt(0).toUpperCase() + w.name.slice(1)}
               </Link>
