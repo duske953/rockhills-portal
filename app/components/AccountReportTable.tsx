@@ -182,11 +182,11 @@ const MonthlyScoreboard = ({
   const isExpenseUp = stats.totalExpenses > prevStats.totalExpenses;
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 print:hidden">
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6 print:hidden">
       {/* Executive Net Performance Card */}
       <div
         className={cn(
-          'rounded-[2rem] p-8 relative overflow-hidden group shadow-xl transition-all duration-500',
+          'rounded-2xl sm:rounded-[2rem] p-4 sm:p-8 relative overflow-hidden group shadow-xl transition-all duration-500',
           isNetGrowth
             ? 'bg-emerald-50 border border-emerald-100 shadow-emerald-200/50'
             : 'bg-rose-50 border border-rose-100 shadow-rose-200/50',
@@ -238,7 +238,7 @@ const MonthlyScoreboard = ({
       </div>
 
       {/* Monthly Expenses Card */}
-      <div className="bg-slate-50 border border-slate-200 rounded-[2rem] p-8 relative overflow-hidden group shadow-xl shadow-slate-200/30">
+      <div className="bg-slate-50 border border-slate-200 rounded-2xl sm:rounded-[2rem] p-4 sm:p-8 relative overflow-hidden group shadow-xl shadow-slate-200/30">
         <div className="absolute right-0 top-0 p-4 opacity-10 group-hover:scale-110 transition-transform">
           <Receipt size={60} />
         </div>
@@ -266,7 +266,7 @@ const MonthlyScoreboard = ({
         </div>
       </div>
 
-      <div className="bg-slate-900 rounded-[2rem] p-8 text-white relative overflow-hidden group shadow-2xl shadow-slate-900/40">
+      <div className="bg-slate-900 rounded-2xl sm:rounded-[2rem] p-4 sm:p-8 text-white relative overflow-hidden group shadow-2xl shadow-slate-900/40">
         <div className="absolute right-0 top-0 p-4 opacity-10 group-hover:scale-110 transition-transform duration-700">
           <BarChart3 size={60} />
         </div>
@@ -299,7 +299,7 @@ const MonthlyScoreboard = ({
         </div>
       </div>
 
-      <div className="bg-white rounded-[2rem] p-8 border border-slate-100 shadow-xl shadow-slate-200/50 flex flex-col justify-between group relative overflow-hidden">
+      <div className="bg-white rounded-2xl sm:rounded-[2rem] p-4 sm:p-8 border border-slate-100 shadow-xl shadow-slate-200/50 flex flex-col justify-between group relative overflow-hidden">
         {stats.mvp ? (
           <>
             <div className="absolute -right-4 -top-4 w-24 h-24 bg-rose-50 rounded-full opacity-50 group-hover:scale-150 transition-transform duration-700" />
@@ -690,12 +690,12 @@ export default function AccountReportTable({
               className="bg-white rounded-[2.5rem] border border-slate-100 shadow-xl shadow-slate-200/50 overflow-hidden transition-all hover:shadow-2xl hover:shadow-slate-200/60"
             >
               {/* Pulse Visualizer at very top */}
-              <div className="px-12 bg-slate-50/30">
+              <div className="px-4 sm:px-12 bg-slate-50/30">
                 <ShiftActivityPulse customers={report.customers} />
               </div>
 
               {/* Report Header */}
-              <div className="px-8 py-6 bg-slate-50/50 border-b border-slate-100 flex flex-col md:flex-row justify-between items-center gap-4">
+              <div className="px-4 sm:px-8 py-4 sm:py-6 bg-slate-50/50 border-b border-slate-100 flex flex-col md:flex-row justify-between items-center gap-4">
                 <div className="flex items-center gap-4">
                   <div className="bg-white p-3 rounded-2xl shadow-sm text-primary">
                     <Calendar size={20} />
@@ -774,7 +774,7 @@ export default function AccountReportTable({
                 </div>
               </div>
 
-              <div className="p-8 space-y-10">
+              <div className="p-4 sm:p-8 space-y-6 sm:space-y-10">
                 {/* Stats Breakdown Section */}
                 <div className="space-y-6">
                   {/* Category Headers */}
@@ -788,7 +788,7 @@ export default function AccountReportTable({
                         </h4>
                       </div>
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        <div className="bg-indigo-50/30 rounded-3xl p-6 border border-indigo-100/50 group hover:bg-white transition-all shadow-sm">
+                        <div className="bg-indigo-50/30 rounded-3xl p-3 sm:p-6 border border-indigo-100/50 group hover:bg-white transition-all shadow-sm">
                           <p className="text-[9px] font-black text-indigo-400 uppercase tracking-widest mb-2 flex items-center gap-1.5">
                             <CreditCard size={10} /> Lodge POS
                           </p>
@@ -797,7 +797,7 @@ export default function AccountReportTable({
                             {formatAmount(stats.lodgePos)}
                           </p>
                         </div>
-                        <div className="bg-indigo-50/30 rounded-3xl p-6 border border-indigo-100/50 group hover:bg-white transition-all shadow-sm">
+                        <div className="bg-indigo-50/30 rounded-3xl p-3 sm:p-6 border border-indigo-100/50 group hover:bg-white transition-all shadow-sm">
                           <p className="text-[9px] font-black text-indigo-400 uppercase tracking-widest mb-2 flex items-center gap-1.5">
                             <Wallet size={10} /> Lodge Cash
                           </p>
@@ -818,7 +818,7 @@ export default function AccountReportTable({
                         </h4>
                       </div>
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        <div className="bg-amber-50/30 rounded-3xl p-6 border border-amber-100/50 group hover:bg-white transition-all shadow-sm">
+                        <div className="bg-amber-50/30 rounded-3xl p-3 sm:p-6 border border-amber-100/50 group hover:bg-white transition-all shadow-sm">
                           <p className="text-[9px] font-black text-amber-400 uppercase tracking-widest mb-2 flex items-center gap-1.5">
                             <CreditCard size={10} /> Drink POS
                           </p>
@@ -827,7 +827,7 @@ export default function AccountReportTable({
                             {formatAmount(stats.drinkPos)}
                           </p>
                         </div>
-                        <div className="bg-amber-50/30 rounded-3xl p-6 border border-amber-100/50 group hover:bg-white transition-all shadow-sm">
+                        <div className="bg-amber-50/30 rounded-3xl p-3 sm:p-6 border border-amber-100/50 group hover:bg-white transition-all shadow-sm">
                           <p className="text-[9px] font-black text-amber-400 uppercase tracking-widest mb-2 flex items-center gap-1.5">
                             <Wallet size={10} /> Drink Cash
                           </p>
@@ -841,7 +841,7 @@ export default function AccountReportTable({
                   </div>
 
                   {/* Net Summary Bar */}
-                  <div className="bg-slate-900 rounded-[2rem] p-8 border border-slate-800 flex flex-col sm:flex-row items-center justify-between shadow-2xl shadow-slate-900/20 relative overflow-hidden group gap-6">
+                  <div className="bg-slate-900 rounded-2xl sm:rounded-[2rem] p-4 sm:p-8 border border-slate-800 flex flex-col sm:flex-row items-center justify-between shadow-2xl shadow-slate-900/20 relative overflow-hidden group gap-4 sm:gap-6">
                     <div className="absolute top-0 right-0 p-8 opacity-5 group-hover:scale-110 transition-transform">
                       <Receipt size={140} />
                     </div>
@@ -993,7 +993,7 @@ export default function AccountReportTable({
                       </h4>
                     </div>
 
-                    <div className="bg-white rounded-3xl p-6 border border-slate-100 shadow-sm space-y-6">
+                    <div className="bg-white rounded-3xl p-3 sm:p-6 border border-slate-100 shadow-sm space-y-6">
                       {/* Action Buttons Rendered within this section */}
                       <div className="flex flex-col gap-3 pb-6 border-b border-slate-100">
                         {type === 'worker' && (

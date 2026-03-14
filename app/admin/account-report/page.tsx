@@ -51,7 +51,7 @@ export default async function page({
   ]);
 
   return (
-    <section className="mx-auto relative py-10 px-6">
+    <section className="mx-auto relative py-6 sm:py-10 px-3 sm:px-6">
       <AccountReportTable
         accountReport={accountReport}
         prevAccountReport={prevAccountReport}
