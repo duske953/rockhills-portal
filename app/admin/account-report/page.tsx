@@ -15,26 +15,46 @@ export default async function page({
   const startDate = moment(`${year}-${month}-01`).toDate();
   const endDate = moment(startDate).add(1, 'month').toDate();
 
-  const accountReport = await prisma.worker.findMany({
-    where: {
-      name: {
-        equals: name as string,
-        mode: 'insensitive',
+  const prevMonthStart = moment(startDate).subtract(1, 'month').toDate();
+  const prevMonthEnd = moment(startDate).toDate();
+
+  const [accountReport, prevAccountReport] = await Promise.all([
+    prisma.worker.findMany({
+      where: {
+        name: {
+          equals: name as string,
+          mode: 'insensitive',
+        },
+        checkInTime: {
+          gte: startDate,
+          lt: endDate,
+        },
       },
-      checkInTime: {
-        gte: startDate,
-        lt: endDate,
+      orderBy: {
+        checkInTime: 'desc',
       },
-    },
-    orderBy: {
-      checkInTime: 'desc',
-    },
-    include: { customers: true },
-  });
+      include: { customers: true },
+    }),
+    prisma.worker.findMany({
+      where: {
+        name: {
+          equals: name as string,
+          mode: 'insensitive',
+        },
+        checkInTime: {
+          gte: prevMonthStart,
+          lt: prevMonthEnd,
+        },
+      },
+      include: { customers: true },
+    }),
+  ]);
+
   return (
-    <section className="max-w-3xl mx-auto relative py-10 max-sm:px-6">
+    <section className="mx-auto relative py-10 px-6">
       <AccountReportTable
         accountReport={accountReport}
+        prevAccountReport={prevAccountReport}
         name={name as string}
       ></AccountReportTable>
     </section>

@@ -10,6 +10,7 @@ import {
 import { Button } from '../components/ui/button';
 import { Input } from '../components/ui/input';
 import { MouseEvent, useEffect, useState } from 'react';
+import { Pencil } from 'lucide-react';
 import { formateInputAmount, removeCommaAmount } from '../utils/formatAmount';
 import DropDownStayType from './components/DropDownStayType';
 import validAmount from '../utils/isValidAmount';
@@ -54,14 +55,14 @@ export default function EditCustomer({
   const validEdit = validAmount(
     validStayType,
     { price: rooms.find((r) => r.room === editInfo.room)?.price },
-    removeCommaAmount(String(editInfo.amount))
+    removeCommaAmount(String(editInfo.amount)),
   );
 
   useEffect(() => {
     setStayType((types) =>
       types.map((type) =>
-        type.stay === stay ? { ...type, checked: true } : type
-      )
+        type.stay === stay ? { ...type, checked: true } : type,
+      ),
     );
   }, [stay]);
 
@@ -72,17 +73,25 @@ export default function EditCustomer({
       id,
       workerId,
       room,
-      editInfo.room,
+      +editInfo.room,
       removeCommaAmount(String(editInfo.amount)),
-      validStayType?.stay || stay
+      validStayType?.stay || stay,
     );
     setLoading(false);
-    return notify(response?.message, 'register-customer', response.code);
+    if (!response)
+      return notify('Something went wrong', 'register-customer', 500);
+    return notify(response.message, 'register-customer', response.code);
   }
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="outline">Edit</Button>
+        <Button
+          variant="outline"
+          size="sm"
+          className="h-8 w-8 rounded-lg border-slate-200 bg-white text-slate-400 hover:text-primary hover:border-primary hover:bg-primary/5 transition-all p-0 shadow-sm"
+        >
+          <Pencil size={12} />
+        </Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>

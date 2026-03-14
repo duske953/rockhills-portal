@@ -12,7 +12,7 @@ const handleRegisterExpenses = tryCatchWrapper(
       expense: string;
       amount: number | undefined;
     }>,
-    workerId: string
+    workerId: string,
   ) => {
     try {
       const activeWorker = await prisma.worker.findFirst({
@@ -24,7 +24,7 @@ const handleRegisterExpenses = tryCatchWrapper(
         return acc + +expense.amount!;
       }, 0);
       const totalLodgeCash = activeWorker.lodgeAmount.find(
-        (lodge: any) => lodge?.paymentType === 'CASH'
+        (lodge: any) => lodge?.paymentType === 'CASH',
       ) as { _sum: { amount: number } } | undefined;
       const drinkSales = activeWorker.drinkSales as
         | { cash?: number }
@@ -45,9 +45,9 @@ const handleRegisterExpenses = tryCatchWrapper(
       });
 
       const approvedAmount = calculateApprovedAmount(
-        doc.expenses,
-        doc.lodgeAmount,
-        doc.drinkSales
+        doc.expenses as any,
+        doc.lodgeAmount as any,
+        doc.drinkSales as any,
       );
       await prisma.worker.update({
         where: { id: activeWorker.id },
@@ -58,7 +58,7 @@ const handleRegisterExpenses = tryCatchWrapper(
     } catch (err) {
       return sendResponse('something went wrong', 500);
     }
-  }
+  },
 );
 
 export default handleRegisterExpenses;

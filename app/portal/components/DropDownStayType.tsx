@@ -7,6 +7,8 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
 } from '@/app/components/ui/dropdown-menu';
+import { Clock, ChevronDown } from 'lucide-react';
+
 export default function DropDownStayType({
   stayType,
   setStayType,
@@ -31,19 +33,23 @@ export default function DropDownStayType({
           ...stay,
           checked: false,
         };
-      })
+      }),
     );
   }
+
+  const selectedStay = stayType.find((s) => s.checked);
 
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button className="rounded-none cursor-pointer" variant="outline">
-          {type}
+        <Button className="cursor-pointer gap-2" variant="outline">
+          <Clock className="w-4 h-4 opacity-70" />
+          {selectedStay ? selectedStay.stay : type}
+          <ChevronDown className="w-4 h-4 opacity-50 ml-auto" />
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56">
-        <DropdownMenuLabel>TYPE</DropdownMenuLabel>
+        <DropdownMenuLabel>Stay Type</DropdownMenuLabel>
         <DropdownMenuSeparator />
         {stayType.map((stay) => (
           <DropdownMenuCheckboxItem

@@ -13,6 +13,7 @@ import { Input } from '@/app/components/ui/input';
 import { FormEvent, useState } from 'react';
 import { notify, toastConfirmAction } from '@/app/utils/toast';
 import handleRegisterDrinkSales from '../actions/handleRegisterDrinkSales';
+import { Wine } from 'lucide-react';
 
 import { toast } from 'sonner';
 import {
@@ -30,12 +31,12 @@ export default function DrinkSales({
 }) {
   const [openDrinkSalesModal, setOpenDrinkSalesModal] = useState(false);
   const [drinkSales, setDrinkSales] = useState(
-    savedDrinkSales || { cash: '', pos: '' }
+    savedDrinkSales || { cash: '', pos: '' },
   );
   const formatCashAmount = removeCommaAmount(drinkSales.cash);
   const formatPosAmount = removeCommaAmount(drinkSales.pos);
-  async function renderSubmitDrinkSales(e: FormEvent<HTMLFormElement>) {
-    e.preventDefault();
+  async function renderSubmitDrinkSales(e?: FormEvent<HTMLFormElement>) {
+    if (e) e.preventDefault();
     if (
       formatPosAmount < MIN_DRINK_AMOUNT &&
       formatCashAmount < MIN_DRINK_AMOUNT
@@ -48,25 +49,32 @@ export default function DrinkSales({
         cash: formatCashAmount,
         pos: formatPosAmount,
       },
-      workerId
+      workerId,
     );
 
+    if (!response) return notify('Something went wrong', 'drink-sales', 500);
     if (response.code === 200) setOpenDrinkSalesModal(false);
     return notify(response.message, 'drink-sales', response.code);
   }
-  const formatInputAmount = (type: string, ...num: Array<any>) => {
+  const formatInputAmount = (type: string, value: string) => {
     setDrinkSales((prev) => {
       return {
         ...prev,
-        [type]: formateInputAmount(num),
+        [type]: formateInputAmount(value),
       };
     });
   };
 
   return (
     <Dialog open={openDrinkSalesModal} onOpenChange={setOpenDrinkSalesModal}>
-      <DialogTrigger className="relative -top-4" asChild>
-        <Button variant="outline">Drinks</Button>
+      <DialogTrigger asChild>
+        <Button
+          variant="outline"
+          className="w-full flex items-center justify-center gap-2 h-10 rounded-xl border-amber-100 bg-amber-50/50 text-amber-700 hover:bg-amber-100 hover:border-amber-200 transition-all font-bold shadow-sm"
+        >
+          <Wine size={14} className="opacity-70" />
+          Drinks
+        </Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
@@ -93,7 +101,9 @@ export default function DrinkSales({
           <DialogFooter>
             <Button
               onClick={() =>
-                toastConfirmAction('Register drinks', renderSubmitDrinkSales)
+                toastConfirmAction('Register drinks', () => {
+                  renderSubmitDrinkSales();
+                })
               }
               type="button"
               disabled={

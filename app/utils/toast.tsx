@@ -6,7 +6,7 @@ export function notify(msg: string, id: string, code: number) {
   return toast.success(msg, { position: 'top-right', id });
 }
 
-export function toastConfirmAction(label: string, fn: any) {
+export function toastConfirmAction(label: string, fn: () => void) {
   return toast('Make sure all fields are correct, you can’t edit them later', {
     position: 'top-center',
     id: 'confirm',

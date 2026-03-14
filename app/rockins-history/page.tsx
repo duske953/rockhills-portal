@@ -5,7 +5,7 @@ import { getCookies } from '../utils/cookies';
 import { DisplayAmount } from './components/DisplayAmount';
 import AccountDateFilter from '../components/AccountDateFilter';
 
-async function getWorkers(month: string, name: any, year: string) {
+async function getWorkers(month: string, name: string | undefined, year: string) {
   const startDate = moment(`${year}-${month}-01`).toDate();
   const endDate = moment(startDate).add(1, 'month').toDate();
   return await prisma.worker.findMany({
@@ -49,12 +49,13 @@ export default async function Page({
   // }
 
   const worker = await getWorkers(month, workerName || '', year);
-  const workers = await getWorkers(month, {}, year);
+  const workers = await getWorkers(month, undefined, year);
 
+  const formattedMonth = String(month).padStart(2, '0');
   const totalLodgers = await prisma.customers.findMany({
     where: {
       checkInTime: {
-        startsWith: `${year}-${+month <= 9 ? `0${month}` : month}`,
+        startsWith: `${year}-${formattedMonth}`,
       },
     },
   });
@@ -69,7 +70,7 @@ export default async function Page({
     const expenses = Array.isArray(worker.expenses) ? worker.expenses : [];
     const workerTotal = expenses.reduce((sum: number, expense) => {
       if (!expense || typeof expense !== 'object') return sum;
-      const amount = (expense as any).amount;
+      const amount = (expense as { amount: number | string }).amount;
       const num =
         typeof amount === 'number' ? amount : parseFloat(String(amount || '0'));
       return sum + (isNaN(num) ? 0 : num);
@@ -82,7 +83,7 @@ export default async function Page({
     .reduce(
       (acc, worker) =>
         acc +
-        ((worker.drinkSales as any)?.pos + (worker.drinkSales as any).cash),
+        ((worker.drinkSales as { pos: number; cash: number })?.pos + (worker.drinkSales as { pos: number; cash: number }).cash),
       0
     );
   const formatMonth = moment()
@@ -141,6 +142,7 @@ export default async function Page({
         <AccountMonthlyReport
           month={formatMonth}
           account={account ?? []}
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           worker={worker as any}
           isCurrWorkerApproved={isCurrWorkerApproved}
         />

@@ -7,6 +7,7 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
 } from '@/app/components/ui/dropdown-menu';
+import { Bed, ChevronDown } from 'lucide-react';
 
 export default function DropDownRooms({
   activeRoom,
@@ -17,10 +18,10 @@ export default function DropDownRooms({
     React.SetStateAction<{ room: number; checked: boolean; price: number }[]>
   >;
 }) {
-  function renderRoomChange(rooms: number) {
+  function renderRoomChange(roomNumber: number) {
     setActiveRoom(
       activeRoom.map((room) => {
-        if (room.room === rooms) {
+        if (room.room === roomNumber) {
           return {
             ...room,
             checked: !room.checked,
@@ -30,19 +31,23 @@ export default function DropDownRooms({
           ...room,
           checked: false,
         };
-      })
+      }),
     );
   }
+
+  const selectedRoom = activeRoom.find((r) => r.checked);
 
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button className="rounded-none cursor-pointer" variant="outline">
-          Rooms
+        <Button className="cursor-pointer gap-2" variant="outline">
+          <Bed className="w-4 h-4 opacity-70" />
+          {selectedRoom ? `Room ${selectedRoom.room}` : 'Select Room'}
+          <ChevronDown className="w-4 h-4 opacity-50 ml-auto" />
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56">
-        <DropdownMenuLabel>Rooms</DropdownMenuLabel>
+        <DropdownMenuLabel>Available Rooms</DropdownMenuLabel>
         <DropdownMenuSeparator />
         {activeRoom.map((room) => (
           <DropdownMenuCheckboxItem
@@ -50,7 +55,7 @@ export default function DropDownRooms({
             checked={room.checked}
             onCheckedChange={() => renderRoomChange(room.room)}
           >
-            {room.room}
+            Room {room.room}
           </DropdownMenuCheckboxItem>
         ))}
       </DropdownMenuContent>

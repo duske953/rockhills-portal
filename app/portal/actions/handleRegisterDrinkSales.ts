@@ -25,9 +25,9 @@ const handleRegisterDrinkSales = tryCatchWrapper(
       },
     });
     const approvedAmount = calculateApprovedAmount(
-      doc.expenses,
-      doc.lodgeAmount,
-      doc.drinkSales
+      doc.expenses as any,
+      doc.lodgeAmount as any,
+      doc.drinkSales as any,
     );
     await prisma.worker.update({
       where: { id: activeWorker.id },
@@ -35,7 +35,7 @@ const handleRegisterDrinkSales = tryCatchWrapper(
     });
     revalidate('/portal/account-report');
     return sendResponse('Registered', 200);
-  }
+  },
 );
 
 export default handleRegisterDrinkSales;

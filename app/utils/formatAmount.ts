@@ -2,7 +2,7 @@ export function formatAmount(amount: number) {
   return new Intl.NumberFormat().format(amount);
 }
 
-export function formateInputAmount(...num: Array<any>) {
+export function formateInputAmount(...num: Array<string | number>) {
   const hasLetters = /[a-zA-Z]/;
   if (hasLetters.test(num.join(''))) return '';
   if (num.join('').length === 0) return '';

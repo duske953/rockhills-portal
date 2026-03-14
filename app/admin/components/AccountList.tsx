@@ -24,6 +24,7 @@ export default function AccountList({
         ? await handleDeactivateAccount(id)
         : await handleApproveAccount(id, acc.active);
     setLoading(false);
+    if (!response) return notify('Something went wrong', 'auth-admin', 500);
     return notify(response.message, 'auth-admin', response.code);
   }
   return (
@@ -35,7 +36,7 @@ export default function AccountList({
         className={cn(
           type === 'Delete Account' &&
             'bg-red-800 hover:bg-red-700 hover:text-white text-white',
-          'cursor-pointer'
+          'cursor-pointer',
         )}
         variant="outline"
         size="sm"

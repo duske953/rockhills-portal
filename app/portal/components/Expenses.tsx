@@ -15,6 +15,7 @@ import { notify, toastConfirmAction } from '@/app/utils/toast';
 
 import handleRegisterExpenses from '../actions/handleRegisterExpenses';
 import { toast } from 'sonner';
+import { Receipt } from 'lucide-react';
 import {
   formateInputAmount,
   removeCommaAmount,
@@ -29,7 +30,7 @@ export default function Expenses({
   const inputIdRef = useRef(0);
   const [expenses, setExpenses] =
     useState<Array<{ expense: string; amount: string; id: number }>>(
-      savedExpenses
+      savedExpenses,
     );
 
   function addMoreExpenses() {
@@ -55,13 +56,13 @@ export default function Expenses({
         e.preventDefault();
       }
     },
-    []
+    [],
   );
 
   function updateExpenses(
     e: ChangeEvent<HTMLInputElement>,
     type: string,
-    id: number
+    id: number,
   ) {
     const expense = expenses.map((expense) => {
       if (expense.id === id) {
@@ -80,13 +81,13 @@ export default function Expenses({
   }
 
   const [openExpensesModal, setExpensesModal] = useState(false);
-  async function renderSubmitExpenses(e: FormEvent<HTMLFormElement>) {
-    e.preventDefault();
+  async function renderSubmitExpenses(e?: FormEvent<HTMLFormElement>) {
+    if (e) e.preventDefault();
     const filterExpenses = expenses
       .filter(
         (expense) =>
           (removeCommaAmount(String(expense.amount)) || 0) > 0 &&
-          expense.expense.length > 0
+          expense.expense.length > 0,
       )
       .map((expense) => {
         return {
@@ -98,13 +99,20 @@ export default function Expenses({
     toast.dismiss('confirm');
     toast.loading('registering', { id: 'expenses', position: 'top-right' });
     const response = await handleRegisterExpenses(filterExpenses, workerId);
+    if (!response) return notify('Something went wrong', 'expenses', 500);
     if (response.code === 200) setExpensesModal(false);
     return notify(response.message, 'expenses', response.code);
   }
   return (
     <Dialog open={openExpensesModal} onOpenChange={setExpensesModal}>
-      <DialogTrigger className="relative -top-4" asChild>
-        <Button variant="outline">Expenses</Button>
+      <DialogTrigger asChild>
+        <Button
+          variant="outline"
+          className="w-full flex items-center justify-center gap-2 h-10 rounded-xl border-rose-100 bg-rose-50/50 text-rose-700 hover:bg-rose-100 hover:border-rose-200 transition-all font-bold shadow-sm"
+        >
+          <Receipt size={14} className="opacity-70" />
+          Expenses
+        </Button>
       </DialogTrigger>
       <DialogContent
         onPointerDownOutside={handleClickOutside}
@@ -146,7 +154,9 @@ export default function Expenses({
           <DialogFooter>
             <Button
               onClick={() =>
-                toastConfirmAction('Register expense', renderSubmitExpenses)
+                toastConfirmAction('Register expense', () => {
+                  renderSubmitExpenses();
+                })
               }
               disabled={
                 expenses.length <= 0 ||

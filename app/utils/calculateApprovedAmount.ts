@@ -1,7 +1,7 @@
 export function calculateApprovedAmount(
-  expenses: Array<any>,
-  lodgeAmount: Array<any>,
-  drinkSales: any
+  expenses: Array<{ amount: number }>,
+  lodgeAmount: Array<{ paymentType: string; _sum: { amount: number | null } }>,
+  drinkSales: { cash?: number; pos?: number } | null | undefined
 ) {
   const totalExpenses = expenses.reduce((acc, expense) => {
     return acc + expense.amount;

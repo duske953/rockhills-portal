@@ -7,6 +7,8 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
 } from '@/app/components/ui/dropdown-menu';
+import { CreditCard, ChevronDown } from 'lucide-react';
+
 export default function DropDownPayment({
   payments,
   setPayment,
@@ -29,19 +31,23 @@ export default function DropDownPayment({
           ...payment,
           checked: false,
         };
-      })
+      }),
     );
   }
+
+  const selectedPayment = payments.find((p) => p.checked);
 
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button className="rounded-none cursor-pointer" variant="outline">
-          Method of payment
+        <Button className="cursor-pointer gap-2" variant="outline">
+          <CreditCard className="w-4 h-4 opacity-70" />
+          {selectedPayment ? selectedPayment.type : 'Payment Method'}
+          <ChevronDown className="w-4 h-4 opacity-50 ml-auto" />
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56">
-        <DropdownMenuLabel>Rooms</DropdownMenuLabel>
+        <DropdownMenuLabel>Payment Methods</DropdownMenuLabel>
         <DropdownMenuSeparator />
         {payments.map((payment) => (
           <DropdownMenuCheckboxItem

@@ -12,6 +12,7 @@ export default function Logout({ cookie }: { cookie: string }) {
     setLoading(true);
     const response = await handleLogout(cookie);
     setLoading(false);
+    if (!response) return notify('Something went wrong', 'logout', 500);
     if (response.code === 200) await revalidate('/portal');
     return notify(response.message, 'logout', response.code);
   }

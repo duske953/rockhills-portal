@@ -32,7 +32,7 @@ export default function TemporaryLogin({ name }: { name: string }) {
       </section>
       <div className="flex justify-center pt-36">
         <p className="z-20 top-16 right-3 text-red-700 font-semibold uppercase">
-          Ensure you logout when you're done
+          Ensure you logout when you&apos;re done
         </p>
       </div>
     </>
