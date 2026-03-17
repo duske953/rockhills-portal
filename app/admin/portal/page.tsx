@@ -24,7 +24,7 @@ export default async function Page() {
   ]);
 
   return (
-    <div className="pb-20 pt-12 px-6 lg:px-12 max-w-7xl mx-auto space-y-12">
+    <div className="pb-20 pt-12 px-6 max-sm:px-3 max-w-7xl mx-auto space-y-12">
       {/* Header Section */}
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
         <div className="space-y-2">
@@ -142,7 +142,7 @@ export default async function Page() {
       </div>
 
       {/* Account Audit Section */}
-      <div className="bg-white rounded-[3rem] p-10 border border-slate-100 shadow-2xl shadow-slate-200/40 relative overflow-hidden">
+      <div className="bg-white max-sm:p-5 rounded-[3rem] p-10 border border-slate-100 shadow-2xl shadow-slate-200/40 relative overflow-hidden">
         <div className="absolute right-0 top-0 p-12 opacity-5">
           <UserCheck size={200} />
         </div>

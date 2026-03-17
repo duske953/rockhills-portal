@@ -6,8 +6,15 @@ export function notify(msg: string, id: string, code: number) {
   return toast.success(msg, { position: 'top-right', id });
 }
 
-export function toastConfirmAction(label: string, fn: () => void) {
-  return toast('Make sure all fields are correct, you can’t edit them later', {
+export function toastConfirmAction(
+  label: string,
+  fn: () => void | Promise<void>,
+) {
+  const handleAction = () => {
+    void Promise.resolve(fn()).catch(() => {});
+  };
+
+  return toast('Make sure all fields are correct, you canâ€™t edit them later', {
     position: 'top-center',
     id: 'confirm',
     duration: 10000,
@@ -16,7 +23,7 @@ export function toastConfirmAction(label: string, fn: () => void) {
         className="cursor-pointer"
         variant="outline"
         size="sm"
-        onClick={fn}
+        onClick={handleAction}
       >
         {label}
       </Button>

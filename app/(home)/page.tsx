@@ -27,13 +27,13 @@ export default async function Page() {
             RockHills
             <br />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-blue-500">
-              Portfolio
+              Portal
             </span>
           </h1>
 
           <p className="max-w-2xl mx-auto text-lg text-slate-500 font-medium leading-relaxed">
-            Elevating hospitality management with real-time executive analytics,
-            consolidated shift auditing, and intelligent guest loyalty tracking.
+            Elevating hospitality management with real-time analytics, shift
+            auditing, and intelligent guest loyalty tracking.
           </p>
 
           <div className="flex flex-wrap items-center justify-center gap-4 pt-8">
@@ -41,7 +41,7 @@ export default async function Page() {
               href="/portal"
               className="px-8 py-4 bg-slate-900 text-white rounded-2xl font-black uppercase tracking-widest text-xs hover:bg-slate-800 transition-all hover:scale-105 shadow-xl shadow-slate-900/20 flex items-center gap-3 group"
             >
-              Enterprise Portal
+              Portal
               <ArrowRight
                 size={16}
                 className="group-hover:translate-x-1 transition-transform"
@@ -51,7 +51,7 @@ export default async function Page() {
               href="/admin/portal"
               className="px-8 py-4 bg-white text-slate-900 border border-slate-200 rounded-2xl font-black uppercase tracking-widest text-xs hover:bg-slate-50 transition-all flex items-center gap-3"
             >
-              Executive Admin
+              Admin
             </Link>
           </div>
         </div>

@@ -9,7 +9,7 @@ import {
   DropdownMenuCheckboxItem,
   DropdownMenuSeparator,
 } from '@/app/components/ui/dropdown-menu';
-import { DisplayAmount } from '@/app/rockins-history/components/DisplayAmount';
+import { DisplayAmount } from '@/app/components/DisplayAmount';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 

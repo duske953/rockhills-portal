@@ -18,9 +18,9 @@ export async function calculateLodgeAmount(id: string) {
     },
   });
   const approvedAmount = calculateApprovedAmount(
-    doc.expenses as any,
-    doc.lodgeAmount as any,
-    doc.drinkSales as any,
+    doc.expenses,
+    doc.lodgeAmount,
+    doc.drinkSales,
   );
   await prisma.worker.update({
     where: { id },
