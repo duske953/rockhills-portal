@@ -216,11 +216,6 @@ const MonthlyScoreboard = ({
           </>
         )}
       </div>
-
-      {/* Revenue Trend Chart */}
-      <div className="flex flex-col h-full">
-        {/* <RevenueTrendChart reports={stats.allReports} /> */}
-      </div>
     </div>
   );
 };
