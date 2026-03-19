@@ -178,7 +178,7 @@ export default async function Page() {
             </div>
           </div>
 
-          <div className="bg-slate-50 rounded-[2rem] p-8 border border-slate-100 space-y-6">
+          {/* <div className="bg-slate-50 rounded-[2rem] p-8 border border-slate-100 space-y-6">
             <div className="flex justify-between items-center">
               <h4 className="text-xs font-black text-slate-400 uppercase tracking-[0.2em]">
                 Live Insights
@@ -217,7 +217,7 @@ export default async function Page() {
                 </div>
               </div>
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
     </div>
