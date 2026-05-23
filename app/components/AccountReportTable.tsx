@@ -13,7 +13,6 @@ import {
   calculateStats,
   calculateTotalCashSales,
   getInsights,
-  objectToArrObj,
 } from './account-report/accountReportUtils';
 
 export default function AccountReportTable({
