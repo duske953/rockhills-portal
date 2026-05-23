@@ -30,31 +30,21 @@ export default function AccountDropdown({
       <DropdownMenuTrigger asChild>
         <Button
           variant="outline"
-          className="h-12 px-6 rounded-2xl flex items-center gap-3 bg-white border-slate-100 shadow-sm hover:border-primary/50 hover:bg-slate-50 transition-all font-black uppercase text-[10px] tracking-widest"
+          className="h-10 px-4 rounded-xl flex items-center gap-2 bg-white border-slate-100 hover:bg-slate-50 transition-colors font-bold uppercase text-[10px] tracking-widest"
         >
-          <UserCircle2 size={18} className="text-primary" />
+          <UserCircle2 size={16} className="text-slate-400" />
           <span>Select Account Report</span>
-          <ChevronDown
-            size={14}
-            className="text-slate-400 group-hover:text-primary transition-colors"
-          />
+          <ChevronDown size={12} className="text-slate-300" />
         </Button>
       </DropdownMenuTrigger>
 
       <DropdownMenuContent
-        className="w-72 p-2 rounded-[1.5rem] border-slate-100 shadow-2xl animate-in fade-in zoom-in duration-200"
+        className="w-64 p-1 rounded-xl border-slate-100 shadow-xl"
         align="start"
       >
-        <div className="px-4 py-3 mb-1">
-          <p className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] flex items-center gap-2">
-            <Search size={10} />
-            Personnel Directory
-          </p>
-        </div>
+        <DropdownMenuSeparator className="bg-slate-50 mx-1" />
 
-        <DropdownMenuSeparator className="bg-slate-50 mx-2" />
-
-        <div className="max-h-[300px] overflow-y-auto custom-scrollbar p-1 space-y-1 mt-1">
+        <div className="max-h-[300px] overflow-y-auto p-1 space-y-0.5">
           {accounts.map((acc) => {
             const isActive =
               acc.name.toLowerCase() === activeAcc?.toLowerCase();
@@ -62,10 +52,10 @@ export default function AccountDropdown({
               <DropdownMenuItem
                 key={acc.name}
                 className={cn(
-                  'flex items-center justify-between px-4 py-3 rounded-xl transition-all cursor-pointer group',
+                  'flex items-center justify-between px-3 py-2 rounded-lg transition-colors cursor-pointer',
                   isActive
-                    ? 'bg-primary/5 border border-primary/10'
-                    : 'hover:bg-slate-50',
+                    ? 'bg-gray-200 text-slate-900'
+                    : 'hover:bg-slate-50 text-slate-700',
                 )}
                 asChild
               >
@@ -73,39 +63,20 @@ export default function AccountDropdown({
                   href={`/admin/account-report/?acc=${acc.name}&month=${
                     new Date().getMonth() + 1
                   }&year=${new Date().getFullYear()}`}
-                  className="w-full flex items-center justify-between"
+                  className="w-full"
                 >
-                  <div className="flex items-center gap-3">
-                    <div
-                      className={cn(
-                        'w-8 h-8 rounded-lg flex items-center justify-center transition-colors',
-                        isActive
-                          ? 'bg-primary text-white'
-                          : 'bg-slate-100 text-slate-400 group-hover:bg-primary/10 group-hover:text-primary',
-                      )}
-                    >
-                      <FileText size={14} />
-                    </div>
-                    <div>
-                      <p
-                        className={cn(
-                          'text-xs font-black capitalize',
-                          isActive ? 'text-primary' : 'text-slate-700',
-                        )}
-                      >
-                        {acc.name}
-                      </p>
-                      <p className="text-[8px] font-bold text-slate-400 uppercase tracking-tighter">
-                        View Audit Trail
-                      </p>
-                    </div>
+                  <div className="flex items-center gap-2">
+                    <FileText
+                      size={12}
+                      className={isActive ? 'text-slate-400' : 'text-slate-300'}
+                    />
+                    <span className="text-xs font-bold capitalize">
+                      {acc.name}
+                    </span>
                   </div>
 
                   {isActive && (
-                    <CheckCircle2
-                      size={14}
-                      className="text-primary animate-in zoom-in"
-                    />
+                    <CheckCircle2 size={12} className="text-white" />
                   )}
                 </Link>
               </DropdownMenuItem>

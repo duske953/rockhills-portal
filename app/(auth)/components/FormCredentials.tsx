@@ -72,10 +72,6 @@ export default function FormCredentials({
           <div className="p-10 space-y-8">
             {/* Form Header */}
             <div className="space-y-3 text-center">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary text-[10px] font-black uppercase tracking-[0.2em] mb-2 mx-auto">
-                <ShieldCheck size={12} />
-                Secure Terminal
-              </div>
               <h2 className="text-4xl font-black text-slate-800 tracking-tight">
                 {type === 'login' ? 'Welcome' : 'Register'}{' '}
                 <span className="text-primary">Back</span>
@@ -163,18 +159,6 @@ export default function FormCredentials({
                 />
               </Link>
             </div>
-          </div>
-        </div>
-
-        {/* Brand Footer */}
-        <div className="mt-8 text-center space-y-4">
-          <p className="text-[10px] font-black text-slate-400 uppercase tracking-[0.3em]">
-            RockHills Luxury Suites • Enterprise v2.1
-          </p>
-          <div className="flex items-center justify-center gap-4 text-slate-300">
-            <div className="h-px w-8 bg-slate-200" />
-            <ShieldCheck size={14} />
-            <div className="h-px w-8 bg-slate-200" />
           </div>
         </div>
       </div>

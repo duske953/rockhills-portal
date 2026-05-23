@@ -21,33 +21,33 @@ const GuestLogTable = ({
   type?: string;
 }) => {
   return (
-    <div className="flex-1 space-y-6">
-      <div className="flex items-center gap-3">
-        <div className="h-0.5 w-6 bg-primary rounded-full" />
-        <h4 className="text-xs font-black text-slate-800 uppercase tracking-widest">
+    <div className="flex-1 space-y-4">
+      <div className="flex items-center gap-2">
+        <h4 className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">
           Guest Log
         </h4>
+        <div className="h-px flex-1 bg-slate-100" />
       </div>
-      <div className="rounded-2xl border border-slate-100 overflow-hidden shadow-sm">
+      <div className="rounded-xl border border-slate-100 overflow-hidden">
         <Table>
-          <TableHeader className="bg-slate-50">
+          <TableHeader className="bg-slate-50/50">
             <TableRow className="hover:bg-transparent border-none">
-              <TableHead className="text-[10px] font-black uppercase text-slate-500">
+              <TableHead className="text-[10px] font-bold uppercase text-slate-400 h-10">
                 Guest
               </TableHead>
-              <TableHead className="text-[10px] font-black uppercase text-slate-500">
+              <TableHead className="text-[10px] font-bold uppercase text-slate-400 h-10">
                 Contact
               </TableHead>
-              <TableHead className="text-[10px] font-black uppercase text-slate-500 text-center">
+              <TableHead className="text-[10px] font-bold uppercase text-slate-400 text-center h-10">
                 Room
               </TableHead>
-              <TableHead className="text-[10px] font-black uppercase text-slate-500">
+              <TableHead className="text-[10px] font-bold uppercase text-slate-400 h-10">
                 Payment
               </TableHead>
-              <TableHead className="text-[10px] font-black uppercase text-slate-500 text-right">
+              <TableHead className="text-[10px] font-bold uppercase text-slate-400 text-right h-10">
                 Amount
               </TableHead>
-              <TableHead className="text-[10px] font-black uppercase text-slate-500 text-right opacity-0">
+              <TableHead className="text-[10px] font-bold uppercase text-slate-400 text-right opacity-0 h-10">
                 -
               </TableHead>
             </TableRow>
@@ -56,46 +56,36 @@ const GuestLogTable = ({
             {customers.map((customer: any) => (
               <TableRow
                 key={customer.id}
-                className="hover:bg-slate-50/50 transition-colors border-none"
+                className="hover:bg-slate-50/30 transition-colors border-none"
               >
-                <TableCell className="font-bold text-slate-800">
+                <TableCell className="font-semibold text-slate-900 py-3">
                   {customer.name}
                 </TableCell>
-                <TableCell className="text-xs text-slate-500 font-medium">
-                  <div className="flex items-center gap-2">
-                    <Phone size={10} className="text-primary/40" />
-                    {customer.phoneNumber}
-                  </div>
+                <TableCell className="text-xs text-slate-500 py-3">
+                  {customer.phoneNumber}
                 </TableCell>
-                <TableCell className="text-center">
-                  <span className="bg-slate-100 text-slate-600 px-2 py-1 rounded-lg text-xs font-black">
+                <TableCell className="text-center py-3">
+                  <span className="text-slate-600 text-xs font-bold">
                     {customer.room}
                   </span>
                 </TableCell>
-                <TableCell>
-                  <div className="flex flex-col gap-1">
-                    <span
-                      className={cn(
-                        'text-[9px] font-black px-1.5 py-0.5 rounded-md w-fit uppercase border',
-                        customer.paymentType === 'CASH'
-                          ? 'bg-emerald-50 text-emerald-600 border-emerald-100'
-                          : 'bg-blue-50 text-blue-600 border-blue-100',
-                      )}
-                    >
+                <TableCell py-3>
+                  <div className="flex flex-col">
+                    <span className="text-[10px] font-bold text-slate-700 uppercase">
                       {customer.paymentType}
                     </span>
-                    <span className="text-[8px] font-bold text-slate-400 pl-0.5 uppercase tracking-tighter italic">
+                    <span className="text-[8px] text-slate-400 uppercase font-medium">
                       {customer.stayType}
                     </span>
                   </div>
                 </TableCell>
-                <TableCell className="text-right font-black text-slate-800 tabular-nums">
+                <TableCell className="text-right font-bold text-slate-900 tabular-nums py-3">
                   <div className="flex items-center justify-end gap-0.5">
-                    <FaNairaSign size={10} className="text-primary" />
+                    <FaNairaSign size={10} className="text-slate-300" />
                     {formatAmount(customer.amount)}
                   </div>
                 </TableCell>
-                <TableCell className="text-right">
+                <TableCell className="text-right py-3">
                   {type === 'worker' && !customer.edit && (
                     <EditCustomer
                       id={customer.id}

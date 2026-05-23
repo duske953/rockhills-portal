@@ -5,20 +5,34 @@ export default async function Page() {
   const account = await prisma.account.findMany({});
 
   return (
-    <div>
-      {account.length === 0 && (
-        <p className="text-3xl">You have no pending account(s)</p>
-      )}
-      <ul className="flex flex-col gap-12">
-        {account.map((acc) => (
-          <AccountList
-            action="approve-account"
-            key={acc.id}
-            acc={acc}
-            type={acc.active ? 'Reject' : 'Approve'}
-          />
-        ))}
-      </ul>
+    <div className="max-w-4xl mx-auto py-12 px-6 space-y-12">
+      <div className="border-b border-slate-100 pb-8">
+        <h1 className="text-3xl font-bold text-slate-900 tracking-tight">
+          Account <span className="text-slate-500 font-medium">Approval</span>
+        </h1>
+        <p className="text-slate-500 text-sm font-medium mt-1">
+          Review and authorize pending personnel account activations.
+        </p>
+      </div>
+
+      <div className="space-y-4">
+        {account.length === 0 ? (
+          <div className="bg-slate-50 rounded-xl p-12 text-center border border-slate-100">
+            <p className="text-slate-400 font-medium">No pending accounts found.</p>
+          </div>
+        ) : (
+          <ul className="flex flex-col gap-3 items-center">
+            {account.map((acc) => (
+              <AccountList
+                action="approve-account"
+                key={acc.id}
+                acc={acc}
+                type={acc.active ? 'Reject' : 'Approve'}
+              />
+            ))}
+          </ul>
+        )}
+      </div>
     </div>
   );
 }

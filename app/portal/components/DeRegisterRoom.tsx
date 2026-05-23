@@ -41,12 +41,9 @@ export default function DeregisterRoom() {
       <DialogTrigger asChild>
         <Button
           variant="outline"
-          className={cn(
-            buttonVariants({ variant: 'outline' }),
-            'h-12 px-6 rounded-2xl gap-3 font-black shadow-sm hover:shadow-lg hover:border-primary transition-all duration-300',
-          )}
+          className="h-10 px-5 rounded-lg gap-2 font-bold text-xs"
         >
-          <LogOut className="w-5 h-5 text-primary" />
+          <LogOut size={14} />
           Deregister Room
         </Button>
       </DialogTrigger>

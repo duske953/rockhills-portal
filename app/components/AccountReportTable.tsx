@@ -74,99 +74,15 @@ export default function AccountReportTable({
     );
 
   return (
-    <section className="relative w-full space-y-12">
-      <style jsx global>{`
-        @media print {
-          .print\:hidden {
-            display: none !important;
-          }
-          body {
-            background: white !important;
-          }
-          section {
-            space-y: 0 !important;
-          }
-          .rounded-\[2\.5rem\] {
-            rounded: 0 !important;
-            border: none !important;
-            shadow: none !important;
-          }
-          .shadow-xl,
-          .shadow-2xl {
-            box-shadow: none !important;
-          }
-          .bg-slate-50\/50,
-          .bg-slate-50 {
-            background: transparent !important;
-            border-bottom: 1px solid #eee !important;
-          }
-          .p-8 {
-            padding: 1rem !important;
-          }
-          h1 {
-            font-size: 24pt !important;
-          }
-          h3 {
-            font-size: 14pt !important;
-          }
-          .grid {
-            display: block !important;
-          }
-          .gap-12,
-          .gap-10,
-          .gap-6 {
-            gap: 0 !important;
-          }
-          .mb-10,
-          .my-10,
-          .space-y-10 {
-            margin: 0 !important;
-          }
-          .border {
-            border: 1px solid #eee !important;
-          }
-          table {
-            width: 100% !important;
-            border-collapse: collapse !important;
-          }
-          th,
-          td {
-            border: 1px solid #eee !important;
-            padding: 4pt !important;
-            font-size: 9pt !important;
-          }
-          .transition-all {
-            transition: none !important;
-          }
-          .bg-emerald-50,
-          .bg-blue-50,
-          .bg-amber-50,
-          .bg-rose-50 {
-            background: #f9f9f9 !important;
-            border: 1px solid #ddd !important;
-          }
-          .text-emerald-600,
-          .text-blue-600,
-          .text-amber-600,
-          .text-rose-600 {
-            color: black !important;
-          }
-        }
-      `}</style>
-
+    <section className="relative w-full space-y-8">
       {children}
-
-      <div className="flex flex-col md:flex-row md:items-end justify-between border-b border-slate-200 pb-8 gap-6 print:pb-4">
-        <div className="space-y-2">
-          <div className="flex items-center gap-2 text-primary font-black uppercase tracking-widest text-[10px]">
-            <Activity className="w-3 h-3" />
-            Performance Audit
-          </div>
-          <h1 className="text-4xl font-black text-slate-800 tracking-tight">
-            {name}'s <span className="text-primary">Journal</span>
+      <div className="flex flex-col md:flex-row md:items-end justify-between border-b border-slate-100 pb-8 gap-4">
+        <div className="space-y-1">
+          <h1 className="text-3xl font-bold text-slate-900 tracking-tight capitalize">
+            {name}'s <span className="text-slate-500 font-medium">Journal</span>
           </h1>
-          <p className="text-slate-500 font-medium">
-            Summary for {selectedMonth} {searchParams.get('year')}
+          <p className="text-slate-400 text-sm font-medium">
+            {selectedMonth} {searchParams.get('year')} • Performance Summary
           </p>
         </div>
 
@@ -180,7 +96,7 @@ export default function AccountReportTable({
       {/* Modern Executive Scoreboard */}
       <MonthlyScoreboard stats={monthlyStats} prevStats={prevMonthStats} />
 
-      <div className="grid grid-cols-1 gap-12 print:gap-4">
+      <div className="grid grid-cols-1 gap-8">
         {currAccountReport.map((report: any) => {
           const stats = calculateTotalCashSales(
             report.lodgeAmount,
@@ -191,13 +107,8 @@ export default function AccountReportTable({
           return (
             <div
               key={report.id}
-              className="bg-white rounded-[2.5rem] border border-slate-100 shadow-xl shadow-slate-200/50 overflow-hidden transition-all hover:shadow-2xl hover:shadow-slate-200/60"
+              className="bg-white rounded-xl border border-slate-100 overflow-hidden"
             >
-              {/* Pulse Visualizer at very top */}
-              <div className="px-4 sm:px-12 bg-slate-50/30">
-                <ShiftActivityPulse customers={report.customers} />
-              </div>
-
               {/* Report Header */}
               <ReportCardHeader
                 report={report}
@@ -205,7 +116,7 @@ export default function AccountReportTable({
                 insights={insights}
               />
 
-              <div className="p-4 sm:p-8 space-y-6 sm:space-y-10">
+              <div className="p-4 sm:p-8 space-y-8">
                 {/* Stats Breakdown Section */}
                 <RevenueBreakdown stats={stats} />
 

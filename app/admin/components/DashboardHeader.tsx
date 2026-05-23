@@ -28,56 +28,44 @@ export default function DashboardHeader() {
 
   return (
     <>
-      <header className="sticky top-0 z-50 bg-white/80 backdrop-blur-xl border-b border-slate-200 shadow-lg shadow-slate-200/40">
+      <header className="sticky top-0 z-50 bg-white border-b border-slate-100">
         <div className="w-full px-6 py-4">
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-            <div className="flex items-center gap-4 md:gap-6">
-              <div className="flex items-center gap-3">
-                <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-                <span className="text-emerald-600 text-sm font-black uppercase tracking-widest">
-                  ● System Active
+            <div className="flex items-center gap-6">
+              <div className="flex items-center gap-2">
+                <div className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
+                <span className="text-slate-500 text-[10px] font-bold uppercase tracking-widest">
+                  System Online
                 </span>
               </div>
-              <div className="h-px flex-1 md:w-px bg-gradient-to-r from-transparent via-slate-300 to-transparent" />
-              <div className="flex items-center gap-3">
-                <Calendar className="text-primary w-5 h-5" />
-                <span className="text-slate-800 font-black text-sm uppercase tracking-tight">
-                  {months[activeMonth - 1]} 2026
+              <div className="flex items-center gap-2">
+                <Calendar size={14} className="text-slate-400" />
+                <span className="text-slate-900 font-bold text-xs uppercase tracking-widest">
+                  {months[activeMonth - 1]} {new Date().getFullYear()}
                 </span>
               </div>
             </div>
 
-            <div className="flex items-center gap-4">
-              <div className="inline-flex items-center bg-gradient-to-r from-primary/10 to-primary/5 rounded-2xl px-3 py-2 border border-primary/20">
-                <Activity className="w-4 h-4 text-primary mr-2" />
-                <span className="text-[10px] font-black text-primary uppercase tracking-wider">
-                  Session Monitored
-                </span>
-              </div>
+            <div className="flex items-center gap-2">
+              {months.map((month, idx) => (
+                <button
+                  key={month}
+                  onClick={() => handleMonthClick(idx + 1)}
+                  className={cn(
+                    'w-7 h-7 rounded-lg transition-colors flex items-center justify-center text-[10px] font-bold uppercase',
+                    activeMonth === idx + 1
+                      ? 'bg-slate-900 text-white'
+                      : 'bg-slate-50 text-slate-400 hover:bg-slate-100 hover:text-slate-600'
+                  )}
+                  title={month}
+                >
+                  {month.charAt(0)}
+                </button>
+              ))}
             </div>
-          </div>
-
-          <div className="flex items-center gap-2 mt-4">
-            {months.map((month, idx) => (
-              <button
-                key={month}
-                onClick={() => handleMonthClick(idx + 1)}
-                className={cn(
-                  'w-8 h-8 rounded-xl transition-all duration-300 flex items-center justify-center text-xs font-black uppercase',
-                  activeMonth === idx + 1
-                    ? monthsColors[idx % 12] + ' text-white shadow-lg shadow-primary/30 scale-110'
-                    : 'bg-slate-100 text-slate-400 hover:bg-slate-200 hover:text-slate-600'
-                )}
-                title={month}
-              >
-                {month.charAt(0)}
-              </button>
-            ))}
           </div>
         </div>
       </header>
-
-      <div className="w-full mt-20" />
     </>
   );
 }

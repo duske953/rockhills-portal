@@ -110,15 +110,14 @@ export default function RegisterCustomer() {
   return (
     <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
       <div className="lg:col-span-12">
-        <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6 sm:p-8">
-          <div className="flex items-center gap-2 mb-8 text-left border-b pb-4">
-            <ClipboardCheck className="text-primary w-6 h-6" />
+        <div className="bg-white rounded-xl border border-slate-100 p-6 sm:p-8">
+          <div className="flex items-center gap-2 mb-8 border-b border-slate-50 pb-4">
             <div>
-              <h2 className="text-xl font-bold text-gray-800">
+              <h2 className="text-sm font-bold text-slate-900 uppercase tracking-widest">
                 New Registration
               </h2>
-              <p className="text-sm text-gray-500">
-                Enter customer details to book a room
+              <p className="text-xs text-slate-400 font-medium">
+                Complete guest details to assign a room
               </p>
             </div>
           </div>
@@ -127,8 +126,8 @@ export default function RegisterCustomer() {
             {/* Selection Grid */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div className="flex flex-col gap-1.5">
-                <label className="text-xs font-semibold uppercase text-gray-500 ml-1">
-                  Room Selection
+                <label className="text-[10px] font-bold uppercase text-slate-400 ml-1 tracking-widest">
+                  Room
                 </label>
                 <DropDownRooms
                   activeRoom={activeRoom}
@@ -136,14 +135,14 @@ export default function RegisterCustomer() {
                 />
               </div>
               <div className="flex flex-col gap-1.5">
-                <label className="text-xs font-semibold uppercase text-gray-500 ml-1">
-                  Payment Method
+                <label className="text-[10px] font-bold uppercase text-slate-400 ml-1 tracking-widest">
+                  Payment
                 </label>
                 <DropDownPayment payments={payment} setPayment={setPayment} />
               </div>
               <div className="flex flex-col gap-1.5">
-                <label className="text-xs font-semibold uppercase text-gray-500 ml-1">
-                  Stay Duration
+                <label className="text-[10px] font-bold uppercase text-slate-400 ml-1 tracking-widest">
+                  Stay Type
                 </label>
                 <DropDownStayType
                   setStayType={setStayType}
@@ -157,40 +156,40 @@ export default function RegisterCustomer() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="space-y-4">
                 <div className="relative">
-                  <User className="absolute left-3 top-3 w-4 h-4 text-gray-400" />
+                  <User className="absolute left-3 top-3.5 w-4 h-4 text-slate-300" />
                   <Input
-                    className="pl-10 h-11 rounded-xl"
+                    className="pl-10 h-11 rounded-xl border-slate-200"
                     onChange={(e) =>
                       renderRoomMetaDataChange(e, 'customerName')
                     }
-                    placeholder="Customer Name"
+                    placeholder="Guest Name"
                   />
                 </div>
                 <div className="relative">
-                  <Phone className="absolute left-3 top-3 w-4 h-4 text-gray-400" />
+                  <Phone className="absolute left-3 top-3.5 w-4 h-4 text-slate-300" />
                   <Input
-                    className="pl-10 h-11 rounded-xl"
+                    className="pl-10 h-11 rounded-xl border-slate-200"
                     type="number"
                     onChange={(e) =>
                       renderRoomMetaDataChange(e, 'customerNumber')
                     }
-                    placeholder="Phone Number (e.g. 08012345678)"
+                    placeholder="Phone Number"
                   />
                 </div>
               </div>
 
               <div className="space-y-4">
                 <div className="relative">
-                  <Banknote className="absolute left-3 top-3 w-4 h-4 text-gray-400" />
+                  <Banknote className="absolute left-3 top-3.5 w-4 h-4 text-slate-300" />
                   <Input
-                    className="pl-10 text-lg font-bold h-11 rounded-xl border-primary/20 bg-primary/5 focus:bg-white transition-colors"
+                    className="pl-10 text-lg font-bold h-11 rounded-xl border-slate-200 bg-slate-50 focus:bg-white transition-colors"
                     value={roomMetaData.amount}
                     type="text"
                     onChange={(e) => renderRoomMetaDataChange(e, 'amount')}
                     placeholder="Charge Amount"
                   />
                   {validRoom && (
-                    <div className="absolute right-3 top-2.5 flex items-center gap-1.5 px-2 py-0.5 rounded-lg bg-emerald-100 text-emerald-700 text-[10px] font-black uppercase">
+                    <div className="absolute right-3 top-3 flex items-center px-2 py-0.5 rounded-lg bg-slate-200 text-slate-600 text-[9px] font-bold uppercase tracking-widest">
                       Std: ₦{new Intl.NumberFormat().format(validRoom.price)}
                     </div>
                   )}
@@ -204,9 +203,9 @@ export default function RegisterCustomer() {
                     )
                   }
                   disabled={validForm}
-                  className="w-full h-11 uppercase font-black tracking-widest shadow-lg shadow-primary/20 rounded-xl"
+                  className="w-full h-11 uppercase font-bold tracking-widest rounded-xl bg-slate-900 text-white hover:bg-slate-800 transition-colors"
                 >
-                  Register Customer
+                  Register Guest
                 </Button>
               </div>
             </div>

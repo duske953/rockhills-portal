@@ -51,22 +51,21 @@ export default function CustomerInformation({
   }
 
   return (
-    <div className="bg-slate-50 rounded-xl border border-slate-200 p-6 sm:p-8 mt-6">
+    <div className="bg-slate-50 rounded-xl border border-slate-100 p-6 sm:p-8 mt-6">
       <div className="flex items-center gap-2 mb-6 border-b border-slate-200 pb-4">
-        <ReceiptText className="w-5 h-5 text-slate-400" />
-        <h3 className="text-lg font-bold text-slate-700 uppercase tracking-tight">
-          Booking Summary
+        <h3 className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">
+          Booking Preview
         </h3>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {activeRoom.map(
           (room) =>
             room.checked && (
               <MetaData
                 key={room.room}
-                icon={<Bed className="w-4 h-4" />}
-                heading="Room Number"
+                icon={<Bed size={14} />}
+                heading="Room"
                 text={`Room ${room.room}`}
               />
             ),
@@ -77,8 +76,8 @@ export default function CustomerInformation({
             pay.checked && (
               <MetaData
                 key={pay.type}
-                icon={<CreditCard className="w-4 h-4" />}
-                heading="Payment Method"
+                icon={<CreditCard size={14} />}
+                heading="Payment"
                 text={pay.type}
               />
             ),
@@ -89,8 +88,8 @@ export default function CustomerInformation({
             stay.checked && (
               <MetaData
                 key={stay.stay}
-                icon={<Clock className="w-4 h-4" />}
-                heading="Stay Type"
+                icon={<Clock size={14} />}
+                heading="Stay"
                 text={stay.stay}
               />
             ),
@@ -99,19 +98,19 @@ export default function CustomerInformation({
         {validAmount(validStayType, validRoom, formatAmount) && (
           <MetaData
             key={roomMetaData.amount}
-            icon={<CalendarCheck className="w-4 h-4" />}
-            heading="Total Amount"
+            icon={<CalendarCheck size={14} />}
+            heading="Amount"
             text={new Intl.NumberFormat().format(formatAmount)}
           >
-            <FaNairaSign className="text-xs mr-0.5 text-primary/80" />
+            <FaNairaSign className="text-xs mr-0.5 opacity-40" />
           </MetaData>
         )}
 
         {validCustomerName(roomMetaData.customerName) && (
           <MetaData
             key={roomMetaData.customerName}
-            icon={<User className="w-4 h-4" />}
-            heading="Guest Name"
+            icon={<User size={14} />}
+            heading="Guest"
             text={roomMetaData.customerName}
           />
         )}
@@ -119,16 +118,16 @@ export default function CustomerInformation({
         {isNumberValid.isValid && (
           <MetaData
             key={roomMetaData.customerNumber}
-            icon={<Phone className="w-4 h-4" />}
-            heading="Contact Number"
+            icon={<Phone size={14} />}
+            heading="Contact"
             text={String(roomMetaData.customerNumber)}
           />
         )}
       </div>
 
       {!hasData && (
-        <p className="text-slate-400 italic text-sm text-center py-4">
-          No registration details entered yet...
+        <p className="text-slate-400 text-xs text-center py-4">
+          Enter details to see preview...
         </p>
       )}
     </div>
@@ -147,14 +146,14 @@ function MetaData({
   text: string | number;
 }) {
   return (
-    <div className="flex flex-col gap-1 p-3 bg-white rounded-lg border border-slate-100 shadow-sm transition-all hover:border-slate-300">
+    <div className="flex flex-col gap-1 p-4 bg-white rounded-xl border border-slate-100">
       <div className="flex items-center gap-1.5 text-slate-400">
         {icon}
-        <span className="text-[10px] font-bold uppercase tracking-wider">
+        <span className="text-[9px] font-bold uppercase tracking-widest">
           {heading}
         </span>
       </div>
-      <div className="font-semibold text-slate-700 flex items-center text-sm sm:text-base">
+      <div className="font-bold text-slate-900 flex items-center text-sm">
         {children}
         {text}
       </div>

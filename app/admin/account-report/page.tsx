@@ -11,7 +11,7 @@ export default async function page({
   const month = (await searchParams).month;
   const year = (await searchParams).year;
   if (!name || !month || !year || +month < 1 || +month > 12 || +year < 2000)
-    return <div>ken</div>;
+    return <div>null</div>;
   const startDate = moment(`${year}-${month}-01`).toDate();
   const endDate = moment(startDate).add(1, 'month').toDate();
 
@@ -51,7 +51,7 @@ export default async function page({
   ]);
 
   return (
-    <section className="mx-auto relative py-6 sm:py-10 px-3 sm:px-6">
+    <section className="max-w-7xl mx-auto relative py-8 px-4 sm:px-6">
       <AccountReportTable
         accountReport={accountReport}
         prevAccountReport={prevAccountReport}

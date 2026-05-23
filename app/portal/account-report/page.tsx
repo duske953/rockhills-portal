@@ -116,21 +116,21 @@ export default async function Page({
   ]);
 
   return (
-    <section className="pb-20 pt-8 px-6 lg:px-10 bg-slate-50/50 min-h-screen w-full overflow-x-hidden">
-      <div className="w-full space-y-8">
+    <section className="pb-20 pt-8 px-6 lg:px-10 bg-white min-h-screen w-full overflow-x-hidden">
+      <div className="max-w-7xl mx-auto space-y-12">
         {/* Breadcrumb / Nav */}
         <div className="flex items-center gap-4">
           <Link
             href="/portal"
-            className="p-2 rounded-xl bg-white border border-slate-100 text-slate-400 hover:text-primary hover:border-primary transition-all shadow-sm"
+            className="p-2 rounded-lg bg-slate-50 border border-slate-200 text-slate-500 hover:text-slate-900 transition-colors"
           >
-            <ChevronLeft size={20} />
+            <ChevronLeft size={18} />
           </Link>
-          <div className="flex items-center gap-2 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">
+          <div className="flex items-center gap-2 text-[10px] font-bold text-slate-400 uppercase tracking-widest">
             <Home size={10} />
             <span>Portal</span>
             <span className="opacity-30">/</span>
-            <span className="text-slate-800">Account Audit</span>
+            <span className="text-slate-900">Account Audit</span>
           </div>
         </div>
 
@@ -141,10 +141,6 @@ export default async function Page({
           type="worker"
         />
       </div>
-
-      <p className="fixed bottom-6 right-6 text-[10px] text-slate-400 uppercase font-black bg-white/90 backdrop-blur-lg px-4 py-2 rounded-full border border-slate-100 shadow-xl z-50">
-        Internal Audit System • Confidential
-      </p>
     </section>
   );
 }

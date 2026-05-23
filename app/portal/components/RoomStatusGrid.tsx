@@ -14,26 +14,26 @@ export default function RoomStatusGrid({ rooms }: { rooms: Room[] }) {
   const availableCount = rooms.length - occupiedCount;
 
   return (
-    <div className="bg-white rounded-2xl border border-slate-100 shadow-sm p-6 w-full">
+    <div className="bg-white rounded-xl border border-slate-100 p-6 w-full">
       <div className="flex items-center justify-between mb-6">
         <div>
-          <h3 className="text-lg font-bold text-slate-800 uppercase tracking-tighter">
-            Room Status Overview
+          <h3 className="text-sm font-bold text-slate-900 uppercase tracking-widest">
+            Room Status
           </h3>
-          <p className="text-xs text-slate-500 font-medium">
-            Real-time occupancy tracking across the hotel
+          <p className="text-xs text-slate-400 font-medium">
+            Real-time occupancy tracking
           </p>
         </div>
         <div className="flex gap-4">
-          <div className="flex items-center gap-1.5 font-bold">
-            <div className="w-2.5 h-2.5 rounded-full bg-emerald-500" />
-            <span className="text-sm text-slate-600 uppercase tracking-tight">
+          <div className="flex items-center gap-1.5">
+            <div className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
+            <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">
               {availableCount} Free
             </span>
           </div>
-          <div className="flex items-center gap-1.5 font-bold">
-            <div className="w-2.5 h-2.5 rounded-full bg-rose-500" />
-            <span className="text-sm text-slate-600 uppercase tracking-tight">
+          <div className="flex items-center gap-1.5">
+            <div className="w-1.5 h-1.5 rounded-full bg-rose-500" />
+            <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">
               {occupiedCount} Booked
             </span>
           </div>
@@ -45,19 +45,19 @@ export default function RoomStatusGrid({ rooms }: { rooms: Room[] }) {
           <div
             key={room.room}
             className={cn(
-              'group relative flex flex-col items-center justify-center py-4 rounded-xl border transition-all duration-300',
+              'group relative flex flex-col items-center justify-center py-4 rounded-xl border transition-colors',
               room.booked
-                ? 'bg-rose-50 border-rose-100 text-rose-600'
-                : 'bg-emerald-50 border-emerald-100 text-emerald-600 hover:border-emerald-300 hover:shadow-md',
+                ? 'bg-rose-50/30 border-rose-100 text-rose-600'
+                : 'bg-slate-50 border-slate-100 text-slate-600 hover:bg-white hover:border-slate-300',
             )}
           >
             <Bed
               className={cn(
-                'w-5 h-5 mb-1',
-                room.booked ? 'opacity-30' : 'opacity-60',
+                'w-4 h-4 mb-1',
+                room.booked ? 'opacity-40' : 'opacity-20',
               )}
             />
-            <span className="text-sm font-black tracking-tight">
+            <span className="text-sm font-bold tracking-tight">
               {room.room}
             </span>
           </div>

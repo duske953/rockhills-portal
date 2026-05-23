@@ -33,19 +33,19 @@ const ReportCardHeader = ({
   insights: { label: string; icon: string; color: string }[];
 }) => {
   return (
-    <div className="px-4 sm:px-8 py-4 sm:py-6 bg-slate-50/50 border-b border-slate-100 flex flex-col md:flex-row justify-between items-center gap-4">
+    <div className="px-6 py-6 border-b border-slate-100 flex flex-col md:flex-row justify-between items-center gap-4">
       <div className="flex items-center gap-4">
-        <div className="bg-white p-3 rounded-2xl shadow-sm text-primary">
-          <Calendar size={20} />
+        <div className="bg-slate-50 p-2.5 rounded-lg text-slate-400 border border-slate-100">
+          <Calendar size={18} />
         </div>
         <div>
-          <h3 className="text-lg font-black text-slate-800 tracking-tight">
+          <h3 className="text-lg font-bold text-slate-900 tracking-tight">
             {moment(report.checkInTime).format('dddd, MMMM Do YYYY')}
           </h3>
           <div className="flex items-center gap-4 mt-1">
             {type !== 'worker' && (
               <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest flex items-center gap-1.5">
-                <Clock size={10} className="text-primary" />
+                <Clock size={10} />
                 {moment(report.checkInTime).format('h:mm A')}
               </p>
             )}
@@ -56,8 +56,9 @@ const ReportCardHeader = ({
                 <div
                   key={idx}
                   className={cn(
-                    'flex items-center gap-1 px-2 py-0.5 rounded-full text-[8px] font-black uppercase border tracking-wider',
-                    insight.color,
+                    'flex items-center gap-1 px-2 py-0.5 rounded-full text-[8px] font-bold uppercase border tracking-widest',
+                    insight.color.replace('bg-', 'text-').replace('-50', '-600'),
+                    "bg-slate-50 border-slate-100"
                   )}
                 >
                   {iconMap[insight.icon]}
@@ -71,35 +72,15 @@ const ReportCardHeader = ({
 
       <div className="flex items-center gap-6">
         {type === 'worker' ? (
-          <div
-            className={cn(
-              'relative group cursor-default transition-all duration-500',
-              report.approved ? 'hover:scale-105' : 'hover:rotate-1',
+          <div className="flex items-center gap-2 px-4 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-widest border border-slate-200 bg-white text-slate-600">
+            {report.approved ? (
+              <Fingerprint size={12} className="text-emerald-500" />
+            ) : (
+              <Activity size={12} className="text-amber-500" />
             )}
-          >
-            <div
-              className={cn(
-                'absolute -inset-1 blur opacity-25 rounded-full transition duration-500 group-hover:opacity-50',
-                report.approved ? 'bg-emerald-400' : 'bg-amber-400',
-              )}
-            />
-            <div
-              className={cn(
-                'relative flex items-center gap-2 px-5 py-2 rounded-full text-[10px] font-black uppercase tracking-[0.2em] backdrop-blur-xl border shadow-2xl transition-all duration-500',
-                report.approved
-                  ? 'bg-white/80 text-emerald-600 border-emerald-200/50 shadow-emerald-500/10'
-                  : 'bg-white/80 text-amber-600 border-amber-200/50 shadow-amber-500/10',
-              )}
-            >
-              {report.approved ? (
-                <Fingerprint size={12} className="animate-pulse" />
-              ) : (
-                <Activity size={12} className="animate-pulse" />
-              )}
-              <span>
-                {report.approved ? 'System Certified' : 'Pending Audit'}
-              </span>
-            </div>
+            <span>
+              {report.approved ? 'System Certified' : 'Pending Audit'}
+            </span>
           </div>
         ) : (
           <ApproveAccountReport id={report.id} approved={report.approved} />

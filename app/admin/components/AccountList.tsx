@@ -28,15 +28,18 @@ export default function AccountList({
     return notify(response.message, 'auth-admin', response.code);
   }
   return (
-    <li className="flex items-center gap-16 justify-center">
-      <p className="uppercase font-semibold text-gray-700 ">{acc.name}</p>
+    <li className="flex items-center justify-between w-full max-w-md bg-white p-4 rounded-xl border border-slate-100 shadow-sm">
+      <p className="text-sm font-bold text-slate-700 uppercase tracking-tight">
+        {acc.name}
+      </p>
       <Button
         onClick={() => renderApproveAccount(acc.id)}
         disabled={loading}
         className={cn(
-          type === 'Delete Account' &&
-            'bg-red-800 hover:bg-red-700 hover:text-white text-white',
-          'cursor-pointer',
+          type.toLowerCase().includes('delete') || type.toLowerCase().includes('deactivate') || type.toLowerCase().includes('reject')
+            ? 'bg-rose-50 text-rose-600 hover:bg-rose-100 border-rose-100'
+            : 'bg-emerald-50 text-emerald-600 hover:bg-emerald-100 border-emerald-100',
+          'h-8 px-4 rounded-lg font-bold text-[10px] uppercase tracking-widest border transition-colors shadow-none',
         )}
         variant="outline"
         size="sm"

@@ -8,7 +8,7 @@ export default async function Page({ children }: { children: ReactNode }) {
   }
 
   return (
-    <section className="bg-slate-50/30 min-h-screen">
+    <section className="bg-white min-h-screen">
       <div className="w-full">{children}</div>
 
       <Logout cookie="auth-admin" />

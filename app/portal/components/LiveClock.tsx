@@ -22,8 +22,8 @@ export default function LiveClock() {
 
   return (
     <div className="flex flex-col items-end text-right">
-      <div className="flex items-center gap-2 text-primary font-bold tracking-tight">
-        <Clock className="w-4 h-4" />
+      <div className="flex items-center gap-2 text-slate-900 font-bold tracking-tight">
+        <Clock className="w-3.5 h-3.5 opacity-30" />
         <span className="text-xl tabular-nums">{time}</span>
       </div>
       <p className="text-[10px] text-slate-400 font-bold uppercase tracking-widest leading-none mt-1">
