@@ -27,7 +27,7 @@ const handleRegisterDrinkSales = tryCatchWrapper(
     const approvedAmount = calculateApprovedAmount(
       doc.expenses,
       doc.lodgeAmount,
-      doc.drinkSales,
+      doc.drinkSales as any,
     );
     await prisma.worker.update({
       where: { id: activeWorker.id },

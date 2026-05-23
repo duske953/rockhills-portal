@@ -8,7 +8,6 @@ import {
   Bed,
   CreditCard,
   Clock,
-  ReceiptText,
   CalendarCheck,
 } from 'lucide-react';
 

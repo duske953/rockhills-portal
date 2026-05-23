@@ -10,13 +10,7 @@ import {
 import { cn } from '@/app/lib/utils';
 import Link from 'next/link';
 
-import {
-  UserCircle2,
-  ChevronDown,
-  Search,
-  CheckCircle2,
-  FileText,
-} from 'lucide-react';
+import { UserCircle2, ChevronDown, CheckCircle2, FileText } from 'lucide-react';
 
 export default function AccountDropdown({
   accounts,

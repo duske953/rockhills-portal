@@ -1,18 +1,22 @@
 'use client';
 import { useState } from 'react';
-import { Activity, Calendar } from 'lucide-react';
+import { Calendar } from 'lucide-react';
 import { cn } from '@/app/lib/utils';
 import { useRouter, useSearchParams } from 'next/navigation';
 
 const months = [
-  'January', 'February', 'March', 'April', 'May', 'June',
-  'July', 'August', 'September', 'October', 'November', 'December',
-];
-
-const monthsColors = [
-  'bg-rose-500', 'bg-rose-400', 'bg-orange-500', 'bg-yellow-500',
-  'bg-lime-500', 'bg-green-500', 'bg-emerald-500', 'bg-teal-500',
-  'bg-cyan-500', 'bg-sky-500', 'bg-blue-500', 'bg-indigo-500',
+  'January',
+  'February',
+  'March',
+  'April',
+  'May',
+  'June',
+  'July',
+  'August',
+  'September',
+  'October',
+  'November',
+  'December',
 ];
 
 export default function DashboardHeader() {
@@ -55,7 +59,7 @@ export default function DashboardHeader() {
                     'w-7 h-7 rounded-lg transition-colors flex items-center justify-center text-[10px] font-bold uppercase',
                     activeMonth === idx + 1
                       ? 'bg-slate-900 text-white'
-                      : 'bg-slate-50 text-slate-400 hover:bg-slate-100 hover:text-slate-600'
+                      : 'bg-slate-50 text-slate-400 hover:bg-slate-100 hover:text-slate-600',
                   )}
                   title={month}
                 >

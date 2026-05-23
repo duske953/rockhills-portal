@@ -1,14 +1,6 @@
 'use client';
 import { cn } from '@/app/lib/utils';
-import {
-  TrendingUp,
-  TrendingDown,
-  Receipt,
-  BarChart3,
-  Activity,
-  Users,
-  Gem,
-} from 'lucide-react';
+
 import { FaNairaSign } from 'react-icons/fa6';
 
 const MonthlyScoreboard = ({
@@ -35,11 +27,23 @@ const MonthlyScoreboard = ({
           Net Performance
         </p>
         <div className="flex items-end gap-2">
-          <h3 className={cn("text-3xl font-bold tracking-tight", isNetGrowth ? "text-slate-900" : "text-rose-600")}>
+          <h3
+            className={cn(
+              'text-3xl font-bold tracking-tight',
+              isNetGrowth ? 'text-slate-900' : 'text-rose-600',
+            )}
+          >
             {isNetGrowth ? '+' : ''}
             {Math.round(netGrowth)}%
           </h3>
-          <span className={cn("text-[10px] font-bold px-2 py-0.5 rounded-full mb-1 border", isNetGrowth ? "bg-emerald-50 text-emerald-600 border-emerald-100" : "bg-rose-50 text-rose-600 border-rose-100")}>
+          <span
+            className={cn(
+              'text-[10px] font-bold px-2 py-0.5 rounded-full mb-1 border',
+              isNetGrowth
+                ? 'bg-emerald-50 text-emerald-600 border-emerald-100'
+                : 'bg-rose-50 text-rose-600 border-rose-100',
+            )}
+          >
             {isNetGrowth ? 'Growth' : 'Decline'}
           </span>
         </div>

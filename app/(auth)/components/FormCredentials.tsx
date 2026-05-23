@@ -12,7 +12,6 @@ import {
   Lock,
   ArrowRight,
   Sparkles,
-  ShieldCheck,
   Loader2Icon,
   Fingerprint,
 } from 'lucide-react';

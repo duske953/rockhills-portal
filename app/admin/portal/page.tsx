@@ -7,9 +7,6 @@ import {
   Trash2,
   History,
   Users,
-  LayoutDashboard,
-  UserCheck,
-  Activity,
   ArrowUpRight,
 } from 'lucide-react';
 

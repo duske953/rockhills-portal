@@ -9,7 +9,7 @@ import {
   DropdownMenuTrigger,
 } from '@/app/components/ui/dropdown-menu';
 
-import { CheckCircle2, ArrowUpDown, Clock, Filter } from 'lucide-react';
+import { CheckCircle2, ArrowUpDown, Clock } from 'lucide-react';
 import { useState } from 'react';
 
 interface AccountReport {

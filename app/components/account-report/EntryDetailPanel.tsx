@@ -1,19 +1,9 @@
 'use client';
-import { CheckCircle2 } from 'lucide-react';
 import { FaNairaSign } from 'react-icons/fa6';
 import { formatAmount } from '@/app/utils/formatAmount';
 import Expenses from '@/app/portal/components/Expenses';
-import DrinkSales from '@/app/portal/components/DrinkSales';
 
-const EntryDetailPanel = ({
-  report,
-  type,
-  objectToArrObj,
-}: {
-  report: any;
-  type?: string;
-  objectToArrObj: (obj: any) => { amount: number; method: string }[];
-}) => {
+const EntryDetailPanel = ({ report, type }: { report: any; type?: string }) => {
   return (
     <div className="lg:w-80 space-y-4">
       <div className="flex items-center gap-2">

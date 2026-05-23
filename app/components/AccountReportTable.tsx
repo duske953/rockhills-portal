@@ -1,12 +1,11 @@
 'use client';
 import { ReactNode, useMemo, useState } from 'react';
 import moment from 'moment';
-import { Ban, Activity } from 'lucide-react';
+import { Ban } from 'lucide-react';
 import { useSearchParams } from 'next/navigation';
 import AccountReportActions from '../admin/components/AccountReportActions';
 import MonthlyScoreboard from './account-report/MonthlyScoreboard';
 import ReportCardHeader from './account-report/ReportCardHeader';
-import ShiftActivityPulse from './account-report/ShiftActivityPulse';
 import RevenueBreakdown from './account-report/RevenueBreakdown';
 import GuestLogTable from './account-report/GuestLogTable';
 import EntryDetailPanel from './account-report/EntryDetailPanel';
@@ -117,19 +116,12 @@ export default function AccountReportTable({
               />
 
               <div className="p-4 sm:p-8 space-y-8">
-                {/* Stats Breakdown Section */}
                 <RevenueBreakdown stats={stats} />
 
-                {/* Sub-Actions & Details */}
                 <div className="flex flex-col lg:flex-row gap-8">
                   <GuestLogTable customers={report.customers} type={type} />
 
-                  {/* Right Side - Actions & Specific Totals */}
-                  <EntryDetailPanel
-                    report={report}
-                    type={type}
-                    objectToArrObj={objectToArrObj}
-                  />
+                  <EntryDetailPanel report={report} type={type} />
                 </div>
               </div>
             </div>

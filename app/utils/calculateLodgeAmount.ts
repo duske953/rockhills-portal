@@ -17,10 +17,11 @@ export async function calculateLodgeAmount(id: string) {
       lodgeAmount,
     },
   });
+
   const approvedAmount = calculateApprovedAmount(
     doc.expenses,
     doc.lodgeAmount,
-    doc.drinkSales,
+    doc.drinkSales as any,
   );
   await prisma.worker.update({
     where: { id },

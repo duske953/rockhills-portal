@@ -1,6 +1,5 @@
 'use client';
-import { cn } from '@/app/lib/utils';
-import { Phone } from 'lucide-react';
+
 import { FaNairaSign } from 'react-icons/fa6';
 import { formatAmount } from '@/app/utils/formatAmount';
 import {

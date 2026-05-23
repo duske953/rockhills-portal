@@ -15,8 +15,6 @@ import handleDeregisterRoom from '../actions/handleDeregisterRoom';
 import BtnLoader from '@/app/components/BtnLoader';
 import useLoadingBtn from '@/app/hooks/useLoadingBtn';
 import { LogOut } from 'lucide-react';
-import { cn } from '@/app/lib/utils';
-import { buttonVariants } from '@/app/components/ui/button';
 
 export default function DeregisterRoom() {
   const [room, setRoom] = useState('');

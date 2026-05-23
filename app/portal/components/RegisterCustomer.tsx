@@ -17,7 +17,7 @@ import {
   formateInputAmount,
   removeCommaAmount,
 } from '@/app/utils/formatAmount';
-import { User, Phone, Banknote, ClipboardCheck } from 'lucide-react';
+import { User, Phone, Banknote } from 'lucide-react';
 
 export default function RegisterCustomer() {
   const [activeRoom, setActiveRoom] = useState(rooms);

@@ -1,5 +1,3 @@
-import type { Prisma } from '@prisma/client';
-
 type ExpenseEntry = { amount: number };
 type LodgeAmountEntry = {
   paymentType: string;
@@ -36,14 +34,13 @@ const isDrinkSalesEntry = (value: unknown): value is DrinkSalesEntry => {
   );
 };
 
-const getAmountFromSum = (
-  sum: { amount: number | null } | null | undefined,
-) => sum?.amount ?? 0;
+const getAmountFromSum = (sum: { amount: number | null } | null | undefined) =>
+  sum?.amount ?? 0;
 
 export function calculateApprovedAmount(
-  expenses: Prisma.JsonValue[] | null | undefined,
-  lodgeAmount: Prisma.JsonValue[] | null | undefined,
-  drinkSales: Prisma.JsonValue | null | undefined,
+  expenses: null | undefined | Array<any>,
+  lodgeAmount: null | undefined | Array<any>,
+  drinkSales: null | undefined | Array<any>,
 ) {
   const normalizedExpenses = Array.isArray(expenses)
     ? expenses.filter(isExpenseEntry)
