@@ -15,7 +15,6 @@ import { notify, toastConfirmAction } from '@/app/utils/toast';
 
 import handleRegisterExpenses from '../actions/handleRegisterExpenses';
 import { toast } from 'sonner';
-import { Receipt } from 'lucide-react';
 import {
   formateInputAmount,
   removeCommaAmount,
@@ -108,9 +107,8 @@ export default function Expenses({
       <DialogTrigger asChild>
         <Button
           variant="outline"
-          className="w-full flex items-center justify-center gap-2 h-10 rounded-xl border-rose-100 bg-rose-50/50 text-rose-700 hover:bg-rose-100 hover:border-rose-200 transition-all font-bold shadow-sm"
+          className="w-full h-10 rounded-xl font-bold text-xs"
         >
-          <Receipt size={14} className="opacity-70" />
           Expenses
         </Button>
       </DialogTrigger>

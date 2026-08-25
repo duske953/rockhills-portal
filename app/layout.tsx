@@ -1,12 +1,12 @@
 import type { Metadata } from 'next';
 import { Toaster } from 'sonner';
-import { Ubuntu } from 'next/font/google';
+import { Syne } from 'next/font/google';
 import NextTopLoader from 'nextjs-toploader';
 import './globals.css';
 
-const ubuntu = Ubuntu({
+const syne = Syne({
   subsets: ['latin'],
-  weight: ['300', '400', '500', '700'],
+  weight: ['400', '500', '700'],
 });
 export const metadata: Metadata = {
   title: 'Rockhills portal',
@@ -20,7 +20,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${ubuntu.className} antialiased`}>
+      <body className={`${syne.className} antialiased`}>
         <NextTopLoader />
         <Toaster
           className="pointer-events-auto"

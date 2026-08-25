@@ -4,17 +4,9 @@ import { ChangeEvent, FormEvent, useState } from 'react';
 import Link from 'next/link';
 import handleAuth from '../auth/actions/handleAuth';
 import { useRouter } from 'next/navigation';
-import { cn } from '@/app/lib/utils';
 import useLoadingBtn from '@/app/hooks/useLoadingBtn';
 import { notify } from '@/app/utils/toast';
-import {
-  User,
-  Lock,
-  ArrowRight,
-  Sparkles,
-  Loader2Icon,
-  Fingerprint,
-} from 'lucide-react';
+import { Loader2Icon } from 'lucide-react';
 
 export default function FormCredentials({
   type,
@@ -61,103 +53,58 @@ export default function FormCredentials({
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-slate-50/50 p-6 relative overflow-hidden text-slate-900">
-      {/* Background Decorative Elements */}
-      <div className="absolute top-[-10%] right-[-10%] w-[40%] h-[40%] bg-primary/5 rounded-full blur-3xl" />
-      <div className="absolute bottom-[-10%] left-[-10%] w-[40%] h-[40%] bg-indigo-500/5 rounded-full blur-3xl" />
+    <div className="min-h-screen flex items-center justify-center bg-white p-6">
+      <div className="w-full max-w-sm">
+        <div className="space-y-8">
+          <div className="space-y-2 text-center">
+            <h2 className="text-2xl font-bold text-slate-900 tracking-tight">
+              {type === 'login' ? 'Sign in' : 'Create account'}
+            </h2>
+            <p className="text-sm text-slate-400 font-medium">
+              {type === 'login'
+                ? 'Enter your credentials to access the portal.'
+                : 'Set up a new account for a team member.'}
+            </p>
+          </div>
 
-      <div className="w-full max-w-[440px] relative z-10">
-        <div className="bg-white rounded-[2.5rem] border border-slate-100 shadow-2xl shadow-slate-200/50 overflow-hidden">
-          <div className="p-10 space-y-8">
-            {/* Form Header */}
-            <div className="space-y-3 text-center">
-              <h2 className="text-4xl font-black text-slate-800 tracking-tight">
-                {type === 'login' ? 'Welcome' : 'Register'}{' '}
-                <span className="text-primary">Back</span>
-              </h2>
-              <p className="text-slate-500 font-medium text-sm">
-                {type === 'login'
-                  ? 'Access the hotel management portal with your professional credentials.'
-                  : 'Establish your administrative profile to begin operations.'}
-              </p>
-            </div>
+          <form onSubmit={renderSubmitCredentials} className="space-y-4">
+            <input
+              value={credentials.name}
+              onChange={(e) => renderOnChange(e, 'name')}
+              type="text"
+              placeholder="Name"
+              className="w-full px-4 py-3 bg-white border border-slate-200 rounded-lg text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-slate-900/10 focus:border-slate-300 transition-colors"
+            />
+            <input
+              value={credentials.password}
+              onChange={(e) => renderOnChange(e, 'password')}
+              type="password"
+              placeholder="Password"
+              className="w-full px-4 py-3 bg-white border border-slate-200 rounded-lg text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-slate-900/10 focus:border-slate-300 transition-colors"
+            />
 
-            <form onSubmit={renderSubmitCredentials} className="space-y-5">
-              <div className="space-y-4">
-                {/* Name Input */}
-                <div className="relative group">
-                  <div className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-primary transition-colors">
-                    <User size={18} />
-                  </div>
-                  <input
-                    value={credentials.name}
-                    onChange={(e) => renderOnChange(e, 'name')}
-                    type="text"
-                    placeholder="User ID / Name"
-                    className="w-full h-14 pl-12 pr-4 bg-slate-50 border border-slate-100 rounded-2xl text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary focus:bg-white transition-all font-medium"
-                  />
-                </div>
+            <button
+              disabled={!credentials.name || !credentials.password || loading}
+              type="submit"
+              className="w-full py-3 bg-slate-900 text-white rounded-lg text-sm font-semibold tracking-wide hover:bg-slate-800 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+            >
+              {loading ? (
+                <Loader2Icon className="w-4 h-4 animate-spin mx-auto" />
+              ) : (
+                action
+              )}
+            </button>
+          </form>
 
-                {/* Password Input */}
-                <div className="relative group">
-                  <div className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-primary transition-colors">
-                    <Lock size={18} />
-                  </div>
-                  <input
-                    value={credentials.password}
-                    onChange={(e) => renderOnChange(e, 'password')}
-                    type="password"
-                    placeholder="Access Key"
-                    className="w-full h-14 pl-12 pr-4 bg-slate-50 border border-slate-100 rounded-2xl text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary focus:bg-white transition-all font-medium"
-                  />
-                </div>
-              </div>
-
-              {/* Submit Button */}
-              <button
-                disabled={!credentials.name || !credentials.password || loading}
-                type="submit"
-                className={cn(
-                  'w-full h-14 rounded-2xl flex items-center justify-center gap-3 font-black uppercase text-[11px] tracking-widest transition-all duration-300 relative overflow-hidden group shadow-lg',
-                  loading
-                    ? 'bg-slate-100 text-slate-400'
-                    : 'bg-primary text-white hover:bg-slate-900 shadow-primary/20',
-                )}
-              >
-                {loading ? (
-                  <Loader2Icon className="w-5 h-5 animate-spin" />
-                ) : (
-                  <>
-                    <Fingerprint
-                      size={18}
-                      className="group-hover:scale-110 transition-transform"
-                    />
-                    <span>
-                      {action} {type === 'login' ? 'Portal' : 'Account'}
-                    </span>
-                    <ArrowRight
-                      size={16}
-                      className="group-hover:translate-x-1 transition-transform"
-                    />
-                  </>
-                )}
-              </button>
-            </form>
-
-            <div className="pt-4 text-center">
-              <Link
-                href={`/auth/${type === 'signup' ? 'login' : 'signup'}`}
-                className="text-xs font-bold text-slate-400 hover:text-primary transition-colors uppercase tracking-widest flex items-center justify-center gap-2 group"
-              >
-                {type === 'signup'
-                  ? 'Already have an account? Sign In'
-                  : 'New personnel? Create Account'}
-                <Sparkles
-                  size={12}
-                  className="group-hover:rotate-12 transition-transform opacity-0 group-hover:opacity-100"
-                />
-              </Link>
-            </div>
+          <div className="text-center">
+            <Link
+              href={`/auth/${type === 'signup' ? 'login' : 'signup'}`}
+              className="text-xs font-medium text-slate-400 hover:text-slate-600 transition-colors"
+            >
+              {type === 'signup'
+                ? 'Already have an account? Sign in'
+                : "Don't have an account? Create one"}
+            </Link>
           </div>
         </div>
       </div>

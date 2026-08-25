@@ -1,6 +1,6 @@
 'use client';
 import { cn } from '@/app/lib/utils';
-import { Calendar, Clock, Activity, Fingerprint } from 'lucide-react';
+import { Calendar, Clock, CheckCircle2, Hourglass } from 'lucide-react';
 import moment from 'moment';
 import ApproveAccountReport from '@/app/admin/components/ApproveAccountReport';
 import {
@@ -72,14 +72,15 @@ const ReportCardHeader = ({
 
       <div className="flex items-center gap-6">
         {type === 'worker' ? (
-          <div className="flex items-center gap-2 px-4 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-widest border border-slate-200 bg-white text-slate-600">
-            {report.approved ? (
-              <Fingerprint size={12} className="text-emerald-500" />
-            ) : (
-              <Activity size={12} className="text-amber-500" />
-            )}
+          <div className={cn(
+            'flex items-center gap-2 px-4 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-widest border',
+            report.approved
+              ? 'border-emerald-200 bg-emerald-50 text-emerald-600'
+              : 'border-amber-200 bg-amber-50 text-amber-600'
+          )}>
+            {report.approved ? <CheckCircle2 size={12} /> : <Hourglass size={12} />}
             <span>
-              {report.approved ? 'System Certified' : 'Pending Audit'}
+              {report.approved ? 'Approved' : 'Pending Approval'}
             </span>
           </div>
         ) : (

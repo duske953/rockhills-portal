@@ -11,10 +11,10 @@ import {
   Wine,
   Receipt,
   Wallet,
-  Zap,
   ArrowUpRight,
   Award,
   CheckCircle2,
+  Hourglass,
   Sparkles,
   Smartphone,
   Banknote
@@ -461,12 +461,12 @@ export default function AnalyticsDashboard({
                       {data.selectedWorkerData.approved ? (
                         <div className="flex items-center gap-2 px-4 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-[10px] font-black uppercase tracking-wider">
                           <CheckCircle2 size={14} />
-                          Verified Audit
+                          Approved
                         </div>
                       ) : (
                         <div className="flex items-center gap-2 px-4 py-1.5 rounded-full bg-amber-500/10 border border-amber-500/20 text-amber-400 text-[10px] font-black uppercase tracking-wider">
-                          <Zap size={14} />
-                          Awaiting Review
+                          <Hourglass size={14} />
+                          Pending Approval
                         </div>
                       )}
                     </div>

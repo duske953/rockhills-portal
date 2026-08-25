@@ -1,34 +1,19 @@
 'use client';
 import { useState, useEffect } from 'react';
-import { Clock } from 'lucide-react';
 import moment from 'moment';
 
 export default function LiveClock() {
-  const [time, setTime] = useState<string>('');
-  const [date, setDate] = useState<string>('');
+  const [time, setTime] = useState('');
 
   useEffect(() => {
-    setTime(moment().format('hh:mm:ss A'));
-    setDate(moment().format('dddd, MMMM Do YYYY'));
-
+    setTime(moment().format('hh:mm A'));
     const timer = setInterval(() => {
-      setTime(moment().format('hh:mm:ss A'));
-    }, 1000);
-
+      setTime(moment().format('hh:mm A'));
+    }, 60000);
     return () => clearInterval(timer);
   }, []);
 
   if (!time) return null;
 
-  return (
-    <div className="flex flex-col items-end text-right">
-      <div className="flex items-center gap-2 text-slate-900 font-bold tracking-tight">
-        <Clock className="w-3.5 h-3.5 opacity-30" />
-        <span className="text-xl tabular-nums">{time}</span>
-      </div>
-      <p className="text-[10px] text-slate-400 font-bold uppercase tracking-widest leading-none mt-1">
-        {date}
-      </p>
-    </div>
-  );
+  return <span className="text-sm text-slate-400 font-medium">{time}</span>;
 }
