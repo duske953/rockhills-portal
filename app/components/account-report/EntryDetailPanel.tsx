@@ -1,8 +1,9 @@
 'use client';
 import { FaNairaSign } from 'react-icons/fa6';
 import { formatAmount } from '@/app/utils/formatAmount';
+import Expenses from '@/app/portal/components/Expenses';
 
-const EntryDetailPanel = ({ report }: { report: any; type?: string }) => {
+const EntryDetailPanel = ({ report, type }: { report: any; type?: string }) => {
   return (
     <div className="lg:w-80 space-y-4">
       <div className="flex items-center gap-2">
@@ -13,6 +14,14 @@ const EntryDetailPanel = ({ report }: { report: any; type?: string }) => {
       </div>
 
       <div className="bg-white rounded-xl p-6 border border-slate-100 space-y-6">
+        {type === 'worker' && (
+          <Expenses
+            savedExpenses={report.expenses || []}
+            workerId={report.id}
+            label="Add expense"
+          />
+        )}
+
         {/* Mini Ledger */}
         <div className="space-y-4">
           {report.expenses.length > 0 && (
@@ -64,6 +73,7 @@ const EntryDetailPanel = ({ report }: { report: any; type?: string }) => {
             </div>
           </div>
         </div>
+
       </div>
     </div>
   );

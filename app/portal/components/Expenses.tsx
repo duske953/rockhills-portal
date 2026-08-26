@@ -22,9 +22,11 @@ import {
 export default function Expenses({
   savedExpenses,
   workerId,
+  label = 'Expenses',
 }: {
   workerId: string;
   savedExpenses: Array<{ id: number; amount: string; expense: string }>;
+  label?: string;
 }) {
   const inputIdRef = useRef(0);
   const [expenses, setExpenses] =
@@ -109,7 +111,7 @@ export default function Expenses({
           variant="outline"
           className="w-full h-10 rounded-xl font-bold text-xs"
         >
-          Expenses
+          {label}
         </Button>
       </DialogTrigger>
       <DialogContent

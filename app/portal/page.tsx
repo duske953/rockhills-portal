@@ -5,7 +5,7 @@ import TemporaryLogin from './components/TemporaryLogin';
 import { redirect } from 'next/navigation';
 import RegisterCustomer from './components/RegisterCustomer';
 import moment from 'moment';
-import RecentActivity from './components/RecentActivity';
+
 import DeregisterRoom from './components/DeRegisterRoom';
 import LiveClock from './components/LiveClock';
 
@@ -27,13 +27,11 @@ export default async function Page() {
   )
     redirect('/auth/login');
 
-  const recentCustomers = await prisma.customers.findMany({
+  const shiftCustomers = await prisma.customers.findMany({
       where: { workerId: activeUser.id },
-      take: 5,
-      orderBy: { id: 'desc' },
     });
 
-  const shiftTotal = recentCustomers.reduce(
+  const shiftTotal = shiftCustomers.reduce(
     (acc, curr) => acc + curr.amount,
     0,
   );
@@ -83,8 +81,7 @@ export default async function Page() {
           <RegisterCustomer />
         </div>
 
-        {/* Recent Activity */}
-        <RecentActivity bookings={recentCustomers} />
+
 
       </div>
     </section>
