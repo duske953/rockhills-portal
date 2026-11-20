@@ -19,6 +19,7 @@ export default function FormCredentials({
     name: '',
     password: '',
   });
+  const [blockedMessage, setBlockedMessage] = useState('');
   const router = useRouter();
   const { loading, setLoading } = useLoadingBtn();
 
@@ -32,14 +33,20 @@ export default function FormCredentials({
   async function renderSubmitCredentials(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     if (!credentials.name || !credentials.password) return;
+    setBlockedMessage('');
     setLoading(true);
+    const now = new Date();
     const response = await handleAuth(
       credentials.name,
       credentials.password,
       type,
-      new Date(),
+      now,
+      now.getTimezoneOffset(),
     );
     setLoading(false);
+
+    // Login window closed — show the message on the page, not as a toast
+    if (response?.code === 423) return setBlockedMessage(response.message);
 
     if (response && response.code === 200) {
       setCredentials({ name: '', password: '' });
@@ -66,6 +73,15 @@ export default function FormCredentials({
                 : 'Set up a new account for a team member.'}
             </p>
           </div>
+
+          {blockedMessage && (
+            <div
+              role="alert"
+              className="rounded-lg border border-amber-200 bg-amber-50 px-4 py-3 text-sm font-medium text-amber-800"
+            >
+              {blockedMessage}
+            </div>
+          )}
 
           <form onSubmit={renderSubmitCredentials} className="space-y-4">
             <input

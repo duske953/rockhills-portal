@@ -27,8 +27,15 @@ const handleSignup = tryCatchWrapper(async (name: string, password: string) => {
   return sendResponse('Account created', 200);
 });
 
+const LOGIN_CLOSED_CODE = 423;
+
 const handleLogin = tryCatchWrapper(
-  async (name: string, password: string, currDate: Date) => {
+  async (
+    name: string,
+    password: string,
+    currDate: Date,
+    tzOffsetMinutes: number = 0,
+  ) => {
     const user = await prisma.account.findFirst({
       where: {
         name: {
@@ -45,8 +52,10 @@ const handleLogin = tryCatchWrapper(
     const isLoggedIn = await prisma.worker.findFirst({
       where: { isActive: true },
     });
-    const currTime = moment(currDate);
+    // Evaluate the window in the receptionist's timezone, not the server's
+    const currTime = moment(currDate).utcOffset(-tzOffsetMinutes);
     const loginOpen = currTime
+      .clone()
       .hour(LOGIN_OPEN_HOUR)
       .minute(0)
       .second(0)
@@ -76,7 +85,7 @@ const handleLogin = tryCatchWrapper(
     if (!validLoginTime) {
       await deleteCookie('authenticated');
       await sendCookies('temporary-login', user.name);
-      return sendResponse(closedMessage, 200);
+      return sendResponse(closedMessage, LOGIN_CLOSED_CODE);
     }
 
     if (isLoggedIn?.isActive) {
@@ -100,8 +109,9 @@ export default async function handleAuth(
   name: string,
   password: string,
   type: string,
-  currDate: Date
+  currDate: Date,
+  tzOffsetMinutes = 0
 ) {
   if (type === 'signup') return handleSignup(name, password);
-  return handleLogin(name, password, currDate);
+  return handleLogin(name, password, currDate, tzOffsetMinutes);
 }
