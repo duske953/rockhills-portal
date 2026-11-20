@@ -46,12 +46,13 @@ const handleLogin = tryCatchWrapper(
       where: { isActive: true },
     });
     const currTime = moment(currDate);
-    const loginOpen = moment(currDate)
+    const loginOpen = currTime
       .hour(LOGIN_OPEN_HOUR)
       .minute(0)
       .second(0)
       .millisecond(0);
-    const loginClose = moment(currDate)
+    const loginClose = currTime
+      .clone()
       .hour(LOGIN_CLOSE_HOUR)
       .minute(0)
       .second(0)
@@ -61,29 +62,34 @@ const handleLogin = tryCatchWrapper(
     const closedMessage = currTime.isBefore(loginOpen)
       ? 'Login opens at 9:00 AM.'
       : 'Login is closed for today. It reopens at 9:00 AM tomorrow.';
+    // Their shift is still open, so they can log back in at any time
+    if (
+      isLoggedIn?.isActive &&
+      isLoggedIn.name.toLowerCase() === user.name.toLowerCase()
+    ) {
+      await sendCookies('authenticated', user.name);
+      await deleteCookie('temporary-login');
+      return sendResponse('Logged In', 200);
+    }
+
+    // Only starting a new shift is restricted to the login window
     if (!validLoginTime) {
       await deleteCookie('authenticated');
       await sendCookies('temporary-login', user.name);
       return sendResponse(closedMessage, 200);
     }
 
-    if (!isLoggedIn?.isActive) {
-      await prisma.worker.create({
-        data: {
-          name: name.toLowerCase(),
-        },
-      });
-      await sendCookies('authenticated', user.name);
-      await deleteCookie('temporary-login');
-      return sendResponse('Logged In', 200);
-    }
-
-    if (isLoggedIn.name.toLowerCase() !== user.name.toLowerCase()) {
+    if (isLoggedIn?.isActive) {
       await deleteCookie('authenticated');
       await sendCookies('temporary-login', user.name);
       return sendResponse('authenticated', 200);
     }
 
+    await prisma.worker.create({
+      data: {
+        name: name.toLowerCase(),
+      },
+    });
     await sendCookies('authenticated', user.name);
     await deleteCookie('temporary-login');
     return sendResponse('Logged In', 200);
