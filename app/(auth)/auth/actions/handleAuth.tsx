@@ -6,7 +6,8 @@ import prisma from '@/lib/prisma';
 import bcrypt from 'bcrypt';
 import moment from 'moment';
 
-const CHECK_IN_TIME = moment({ hour: 7, minute: 45 });
+const LOGIN_OPEN_HOUR = 9;
+const LOGIN_CLOSE_HOUR = 18;
 const SALT_ROUNDS = 10;
 async function hashPassword(password: string) {
   return await bcrypt.hash(password, SALT_ROUNDS);
@@ -44,34 +45,45 @@ const handleLogin = tryCatchWrapper(
     const isLoggedIn = await prisma.worker.findFirst({
       where: { isActive: true },
     });
-    const hour = moment(currDate).get('hour');
-    const minute = moment(currDate).get('minute');
-    const currTime = moment({ hour, minute });
-    const validLoginTime = moment(currTime).isAfter(CHECK_IN_TIME);
-    if (!isLoggedIn?.isActive && validLoginTime) {
+    const currTime = moment(currDate);
+    const loginOpen = moment(currDate)
+      .hour(LOGIN_OPEN_HOUR)
+      .minute(0)
+      .second(0)
+      .millisecond(0);
+    const loginClose = moment(currDate)
+      .hour(LOGIN_CLOSE_HOUR)
+      .minute(0)
+      .second(0)
+      .millisecond(0);
+    const validLoginTime =
+      currTime.isSameOrAfter(loginOpen) && currTime.isBefore(loginClose);
+    const closedMessage = currTime.isBefore(loginOpen)
+      ? 'Login opens at 9:00 AM.'
+      : 'Login is closed for today. It reopens at 9:00 AM tomorrow.';
+    if (!validLoginTime) {
+      await deleteCookie('authenticated');
+      await sendCookies('temporary-login', user.name);
+      return sendResponse(closedMessage, 200);
+    }
+
+    if (!isLoggedIn?.isActive) {
       await prisma.worker.create({
         data: {
           name: name.toLowerCase(),
         },
       });
+      await sendCookies('authenticated', user.name);
+      await deleteCookie('temporary-login');
       return sendResponse('Logged In', 200);
     }
 
-    if (!isLoggedIn?.isActive && !validLoginTime) {
-      await sendCookies('temporary-login', user.name);
-      return sendResponse(
-        'Login is not yet open. You can access your account starting from 8:45 AM.',
-        200
-      );
-    }
-    if (
-      isLoggedIn?.isActive &&
-      isLoggedIn.name.toLowerCase() !== user.name.toLowerCase()
-    ) {
+    if (isLoggedIn.name.toLowerCase() !== user.name.toLowerCase()) {
       await deleteCookie('authenticated');
       await sendCookies('temporary-login', user.name);
       return sendResponse('authenticated', 200);
     }
+
     await sendCookies('authenticated', user.name);
     await deleteCookie('temporary-login');
     return sendResponse('Logged In', 200);
