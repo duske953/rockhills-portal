@@ -1,3 +1,7 @@
-export default function sendResponse(message: string, code: number) {
-  return { message, code };
+export default function sendResponse(
+  message: string,
+  code: number,
+  data?: unknown,
+) {
+  return { message, code, data };
 }

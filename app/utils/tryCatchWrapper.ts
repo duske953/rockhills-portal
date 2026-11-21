@@ -3,6 +3,7 @@ import sendResponse from './sendResponse';
 type SendResponsePayload = {
   message: string;
   code: number;
+  data?: unknown;
 };
 
 interface AsyncFunction<T extends unknown[], R extends SendResponsePayload> {
