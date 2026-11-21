@@ -1,6 +1,6 @@
 'use client';
 import { cn } from '@/app/lib/utils';
-import { Calendar, Clock, CheckCircle2, Hourglass } from 'lucide-react';
+import { Calendar, Clock, CheckCircle2, Hourglass, AlertCircle } from 'lucide-react';
 import moment from 'moment';
 import ApproveAccountReport from '@/app/admin/components/ApproveAccountReport';
 import {
@@ -67,10 +67,26 @@ const ReportCardHeader = ({
               ))}
             </div>
           </div>
+
+          {report.lateRecord && (
+            <p className="mt-2 text-xs font-medium text-amber-700">
+              Late record
+              {report.openedAt
+                ? ` · recorded ${moment(report.openedAt).format('ddd, MMM D')}`
+                : ''}
+              {report.reason ? ` — ${report.reason}` : ''}
+            </p>
+          )}
         </div>
       </div>
 
-      <div className="flex items-center gap-6">
+      <div className="flex items-center gap-3">
+        {report.lateRecord && (
+          <div className="flex items-center gap-2 px-3 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-widest border border-amber-200 bg-amber-50 text-amber-600">
+            <AlertCircle size={12} />
+            <span>Late</span>
+          </div>
+        )}
         {type === 'worker' ? (
           <div className={cn(
             'flex items-center gap-2 px-4 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-widest border',
