@@ -1,7 +1,7 @@
 'use client';
 import { ReactNode, useMemo, useState } from 'react';
 import moment from 'moment';
-import { Ban } from 'lucide-react';
+import { Ban, CalendarOff } from 'lucide-react';
 import { useSearchParams } from 'next/navigation';
 import AccountReportActions from '../admin/components/AccountReportActions';
 import MonthlyScoreboard from './account-report/MonthlyScoreboard';
@@ -21,12 +21,14 @@ export default function AccountReportTable({
   accountReport,
   name,
   prevAccountReport = [],
+  emptyDays = [],
 }: {
   children?: ReactNode;
   type?: string;
   name: string;
   accountReport: any;
   prevAccountReport?: any;
+  emptyDays?: string[];
 }) {
   const [currAccountReport, setCurrAccountReport] = useState(accountReport);
   const searchParams = useSearchParams();
@@ -46,6 +48,18 @@ export default function AccountReportTable({
   useMemo(() => {
     setCurrAccountReport(accountReport);
   }, [accountReport]);
+
+  // Shifts and empty days together, newest first
+  const timeline = useMemo(() => {
+    const shifts = currAccountReport.map((report: any) => ({
+      day: moment(report.checkInTime).format('YYYY-MM-DD'),
+      report,
+    }));
+    const gaps = emptyDays.map((day) => ({ day, report: null }));
+    return [...shifts, ...gaps].sort((a: any, b: any) =>
+      a.day < b.day ? 1 : -1,
+    );
+  }, [currAccountReport, emptyDays]);
 
   if (accountReport.length <= 0)
     return (
@@ -95,7 +109,28 @@ export default function AccountReportTable({
       <MonthlyScoreboard stats={monthlyStats} prevStats={prevMonthStats} />
 
       <div className="grid grid-cols-1 gap-8">
-        {currAccountReport.map((report: any) => {
+        {timeline.map(({ day, report }: any) => {
+          if (!report)
+            return (
+              <div
+                key={day}
+                className="bg-white rounded-xl border border-dashed border-slate-200 px-6 py-6 flex items-center gap-4"
+              >
+                <div className="bg-slate-50 p-2.5 rounded-lg text-slate-300 border border-slate-100">
+                  <CalendarOff size={18} />
+                </div>
+                <div>
+                  <h3 className="text-sm font-bold text-slate-500 tracking-tight">
+                    No shift on {moment(day).format('dddd, MMMM Do YYYY')}
+                  </h3>
+                  <p className="text-xs font-medium text-slate-400 mt-0.5">
+                    Nobody was logged in that day. Please confirm with your
+                    workers.
+                  </p>
+                </div>
+              </div>
+            );
+
           const stats = calculateTotalCashSales(
             report.lodgeAmount,
             report.drinkSales,
