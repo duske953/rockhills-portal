@@ -7,7 +7,7 @@ import bcrypt from 'bcrypt';
 import moment from 'moment';
 
 const LOGIN_OPEN_HOUR = 9;
-const LOGIN_CLOSE_HOUR = 18;
+const LOGIN_CLOSE_HOUR = 22;
 const SALT_ROUNDS = 10;
 const MIN_REASON_LENGTH = 10;
 const CHOOSE_DAY_CODE = 428;

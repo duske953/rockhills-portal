@@ -2,7 +2,7 @@ import AccountReportTable from '@/app/components/AccountReportTable';
 import prisma from '@/lib/prisma';
 import moment from 'moment';
 
-const LOGIN_CLOSE_HOUR = 18;
+const LOGIN_CLOSE_HOUR = 22;
 
 type Day = moment.Moment;
 
