@@ -23,6 +23,9 @@ model Worker {
   approvedAmount Json?
   lodgeAmount Json[]
   checkInTime DateTime @default(now())
+  openedAt DateTime?
+  lateRecord Boolean @default(false)
+  reason String?
   expenses Json[]
   drinkSales Json?
   checkOutTime DateTime?
