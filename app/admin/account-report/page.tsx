@@ -2,13 +2,11 @@ import AccountReportTable from '@/app/components/AccountReportTable';
 import prisma from '@/lib/prisma';
 import moment from 'moment';
 
-const LOGIN_CLOSE_HOUR = 22;
-
 type Day = moment.Moment;
 
 // Every day nothing was recorded anywhere, from the first shift of the month
-// so days before the app was in use stay quiet. Today only counts once the
-// login window has closed.
+// so days before the app was in use stay quiet. The shift can be filed until
+// midnight, so today only counts once it is over.
 function findEmptyDays(
   monthStart: Day,
   monthEnd: Day,
@@ -16,11 +14,7 @@ function findEmptyDays(
 ) {
   if (!firstShiftDay) return [];
   const emptyDays: string[] = [];
-  const today = moment().startOf('day');
-  const stopAt =
-    moment().hour() >= LOGIN_CLOSE_HOUR
-      ? today
-      : today.clone().subtract(1, 'day');
+  const stopAt = moment().startOf('day').subtract(1, 'day');
   let day = firstShiftDay.clone().startOf('day');
   if (day.isBefore(monthStart)) day = monthStart.clone().startOf('day');
 
