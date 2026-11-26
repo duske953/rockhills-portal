@@ -7,7 +7,6 @@ import bcrypt from 'bcrypt';
 import moment from 'moment';
 
 const LOGIN_OPEN_HOUR = 9;
-const LOGIN_CLOSE_HOUR = 22;
 const SALT_ROUNDS = 10;
 const MIN_REASON_LENGTH = 10;
 const CHOOSE_DAY_CODE = 428;
@@ -56,25 +55,13 @@ const handleLogin = tryCatchWrapper(
     const isLoggedIn = await prisma.worker.findFirst({
       where: { isActive: true },
     });
-    // Evaluate the window in the receptionist's timezone, not the server's
+    // Evaluate the window in the receptionist's timezone, not the server's.
+    // Open from 9:00 AM to midnight, so a shift started in the evening is
+    // never closed out of its own day.
     const currTime = moment(currDate).utcOffset(-tzOffsetMinutes);
-    const loginOpen = currTime
-      .clone()
-      .hour(LOGIN_OPEN_HOUR)
-      .minute(0)
-      .second(0)
-      .millisecond(0);
-    const loginClose = currTime
-      .clone()
-      .hour(LOGIN_CLOSE_HOUR)
-      .minute(0)
-      .second(0)
-      .millisecond(0);
-    const validLoginTime =
-      currTime.isSameOrAfter(loginOpen) && currTime.isBefore(loginClose);
-    const closedMessage = currTime.isBefore(loginOpen)
-      ? 'Login opens at 9:00 AM.'
-      : 'Login is closed for today. It reopens at 9:00 AM tomorrow.';
+    const loginOpen = currTime.clone().startOf('day').hour(LOGIN_OPEN_HOUR);
+    const validLoginTime = !currTime.isBefore(loginOpen);
+    const closedMessage = 'Login opens at 9:00 AM.';
     // Their shift is still open, so they can log back in at any time
     if (
       isLoggedIn?.isActive &&
